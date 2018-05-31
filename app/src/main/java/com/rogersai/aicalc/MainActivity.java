@@ -1,28 +1,42 @@
 package com.rogersai.aicalc;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.rogersai.aicalc.cloudlayout.CloudLayout;
+import com.rogersai.aicalc.cloudlayout.CloudLayoutItem;
+import com.rogersai.aicalc.cloudlayout.CloudLayoutView;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
-    private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
-    private Button buttonLParen, buttonRParen;
-    private Button buttonMultiply, buttonDivide, buttonSubtract, buttonAdd, buttonEnter, buttonClear;
-    private Button toTapeButton;
-    private TextView inputView, preView;
+    private ConstraintLayout cloudContainer;
+    private CloudLayout cloudLayout;
+
     private LinearLayout tapeLayout;
-    private Parser parser;
-    private Evaluator evaluator;
+    private Button toTapeButton;
+
+    private TextView inputView, preView;
+
+    private Button buttonMultiply, buttonDivide, buttonSubtract, buttonAdd, buttonEnter, buttonClear;
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private FragmentManager fragmentManager;
+
+    private Parser parser;
+    private Evaluator evaluator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +44,15 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         setContentView(R.layout.activity_main);
         parser = DaggerParser.create();
         evaluator = new Evaluator();
+        fragmentManager = getSupportFragmentManager();
+
+        cloudContainer = (ConstraintLayout) findViewById(R.id.cloudContainer);
+        cloudLayout = CloudLayout.newInstance();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment cl = (Fragment) cloudLayout;
+        ft.add(cloudContainer.getId(), cl, "cloudLayout");
+        ft.commit();
+
         tabLayout = (TabLayout) findViewById(R.id.atomTabLayout);
         viewPager = (ViewPager) findViewById(R.id.atomViewPager);
         Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -82,6 +105,20 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             @Override
             public void onClick(View v) {
                 inputView.setText("");
+            }
+        });
+        toTapeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int itemID = 0;
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Fragment tapeItem= TapeLayoutItem.newInstance(inputView.getText().toString());
+                if(tapeItem.getArguments() != null) {
+                    itemID = tapeItem.getArguments().getInt("itemID");
+                }
+                System.out.println("tape" + itemID + " added");
+                fragmentTransaction.add(tapeLayout.getId(), tapeItem, "tape" + itemID);
+                fragmentTransaction.commit();
             }
         });
     }
