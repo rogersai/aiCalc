@@ -7,5 +7,9 @@
         android:id="@+id/itemTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:text="TextView" />
 </LinearLayout>

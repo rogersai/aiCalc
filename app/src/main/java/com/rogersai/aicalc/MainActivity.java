@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private ConstraintLayout cloudContainer;
     private CloudLayout cloudLayout;
 
-    private LinearLayout tapeLayout;
+    private LinearLayout tapeStripLayout;
     private Button toTapeButton;
 
     private TextView inputView, preView;
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         toTapeButton = (Button) findViewById(R.id.toTapeButton);
         inputView = (TextView) findViewById(R.id.inputView);
         preView = (TextView) findViewById(R.id.outputView);
-        tapeLayout = (LinearLayout) findViewById(R.id.tapeLayout);
+        tapeStripLayout = (LinearLayout) findViewById(R.id.tapeStripLayout);
 
         buttonMultiply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     itemID = tapeItem.getArguments().getInt("itemID");
                 }
                 System.out.println("tape" + itemID + " added");
-                fragmentTransaction.add(tapeLayout.getId(), tapeItem, "tape" + itemID);
+                fragmentTransaction.add(tapeStripLayout.getId(), tapeItem, "tape" + itemID);
                 fragmentTransaction.commit();
             }
         });

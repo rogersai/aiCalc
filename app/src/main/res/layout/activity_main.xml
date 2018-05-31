@@ -6,44 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/inputView"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:drawable/edit_text"
+        android:text="Input"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/infoLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/cloudContainer"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/outputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:drawable/edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/outputView"
+        app:layout_constraintEnd_toStartOf="@+id/tapeLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"></android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/cloudContainer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tapeLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></android.support.constraint.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/tapeLayout"
-            android:layout_width="122dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
-    </android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/outputView"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:drawable/edit_text"
+        android:text="Output"
+        app:layout_constraintBottom_toTopOf="@+id/inputView"
+        app:layout_constraintEnd_toStartOf="@+id/tapeLayout"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/inputLayout"
@@ -124,20 +124,6 @@
             </TableRow>
         </TableLayout>
 
-        <TextView
-            android:id="@+id/inputView"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Input"
-            app:layout_constraintBottom_toTopOf="@+id/opPad"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@android:drawable/dialog_holo_light_frame" />
-
         <android.support.v4.view.ViewPager
             android:id="@+id/atomViewPager"
             android:layout_width="0dp"
@@ -181,36 +167,41 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/outputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/tapeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/inputLayout"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/inputView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/outputView"
+        <LinearLayout
+            android:id="@+id/tapeStripLayout"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:text="Output"
-            app:layout_constraintEnd_toStartOf="@+id/toTapeButton"
+            android:background="@android:drawable/edit_text"
+            android:orientation="vertical"
+            android:padding="1dp"
+            app:layout_constraintBottom_toTopOf="@+id/toTapeButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:background="@android:drawable/dialog_holo_light_frame" />
+            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
         <Button
             android:id="@+id/toTapeButton"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:text="^ Tape"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

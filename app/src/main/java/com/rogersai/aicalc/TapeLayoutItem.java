@@ -49,7 +49,7 @@ public class TapeLayoutItem extends Fragment {
         textView.setText(itemText);
 
         fragmentManager = getFragmentManager();
-        linearLayout = getActivity().findViewById(R.id.tapeLayout);
+        linearLayout = getActivity().findViewById(R.id.tapeStripLayout);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
