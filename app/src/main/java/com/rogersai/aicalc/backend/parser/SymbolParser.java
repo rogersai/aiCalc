@@ -1,4 +1,4 @@
-package com.rogersai.aicalc;
+package com.rogersai.aicalc.backend.parser;
 
 import com.rogersai.aicalc.symbol.Symbol;
 

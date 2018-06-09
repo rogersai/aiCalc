@@ -1,14 +1,10 @@
-package com.rogersai.aicalc;
+package com.rogersai.aicalc.backend.parser;
 
-import com.rogersai.aicalc.symbol.atom.Atom;
-import com.rogersai.aicalc.symbol.atom.NumberAtom;
 import com.rogersai.aicalc.symbol.operator.AdditionOperator;
 import com.rogersai.aicalc.symbol.operator.DivisionOperator;
 import com.rogersai.aicalc.symbol.operator.MultiplicationOperator;
 import com.rogersai.aicalc.symbol.operator.Operator;
 import com.rogersai.aicalc.symbol.operator.SubtractionOperator;
-
-import javax.inject.Inject;
 
 public class OperatorParser {
     public Operator parse(String input){

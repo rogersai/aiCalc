@@ -8,15 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.rogersai.aicalc.backend.CalcBackend;
 import com.rogersai.aicalc.cloudlayout.CloudLayout;
-import com.rogersai.aicalc.cloudlayout.CloudLayoutItem;
-import com.rogersai.aicalc.cloudlayout.CloudLayoutView;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private LinearLayout tapeStripLayout;
     private Button toTapeButton;
 
-    private TextView inputView, preView;
+    private TextView inputView, outputView;
 
     private Button buttonMultiply, buttonDivide, buttonSubtract, buttonAdd, buttonEnter, buttonClear;
 
@@ -35,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     private FragmentManager fragmentManager;
 
+    //private CalcBackendInterface calc;
+    private CalcBackend calc;
     private Parser parser;
     private Evaluator evaluator;
 
@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        parser = DaggerParser.create();
-        evaluator = new Evaluator();
+        //calc = DaggerCalcBackendInterface.create();
+        calc = CalcBackend.newInstance(this);
+        parser = calc.parser();
+        evaluator = calc.evaluator();
+        inputView = calc.input();
+        outputView = calc.output();
         fragmentManager = getSupportFragmentManager();
 
         cloudContainer = (ConstraintLayout) findViewById(R.id.cloudContainer);
@@ -66,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         buttonEnter= (Button) findViewById(R.id.buttonEnter);
         buttonClear= (Button) findViewById(R.id.buttonClear);
         toTapeButton = (Button) findViewById(R.id.toTapeButton);
-        inputView = (TextView) findViewById(R.id.inputView);
-        preView = (TextView) findViewById(R.id.outputView);
+        //inputView = (TextView) findViewById(R.id.inputView);
+        outputView = (TextView) findViewById(R.id.outputView);
         tapeStripLayout = (LinearLayout) findViewById(R.id.tapeStripLayout);
 
         buttonMultiply.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         buttonEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NumberAtom n = (NumberAtom) evaluator.evaluate(parser.input().parse(inputView.getText().toString()));
-                preView.setText(Double.toString(n.getValue()));
+                NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(inputView.getText().toString()));
+                outputView.setText(Double.toString(n.getValue()));
             }
         });
         buttonClear.setOnClickListener(new View.OnClickListener() {

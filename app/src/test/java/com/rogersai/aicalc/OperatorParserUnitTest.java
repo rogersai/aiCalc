@@ -1,7 +1,6 @@
 package com.rogersai.aicalc;
 
-import com.rogersai.aicalc.symbol.atom.Atom;
-import com.rogersai.aicalc.symbol.atom.NumberAtom;
+import com.rogersai.aicalc.backend.parser.OperatorParser;
 import com.rogersai.aicalc.symbol.operator.AdditionOperator;
 import com.rogersai.aicalc.symbol.operator.DivisionOperator;
 import com.rogersai.aicalc.symbol.operator.MultiplicationOperator;

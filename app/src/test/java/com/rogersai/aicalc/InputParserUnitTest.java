@@ -1,7 +1,6 @@
 package com.rogersai.aicalc;
 
 import com.rogersai.aicalc.symbol.Symbol;
-import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 import com.rogersai.aicalc.symbol.grouper.LParenGrouper;
 import com.rogersai.aicalc.symbol.grouper.RParenGrouper;

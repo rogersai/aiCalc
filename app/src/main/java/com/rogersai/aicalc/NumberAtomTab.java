@@ -8,10 +8,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.rogersai.aicalc.symbol.atom.NumberAtom;
+
 public class NumberAtomTab extends Fragment {
     private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
     private Button buttonLParen, buttonRParen;
-    private TextView inputView;
+    private TextView inputView, outputView;
+    private Parser parser;
+    private Evaluator evaluator;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.number_atom_tab, container, false) ;
@@ -29,11 +34,17 @@ public class NumberAtomTab extends Fragment {
         buttonRParen = (Button) view.findViewById(R.id.buttonRParen);
 
         inputView = (TextView) getActivity().findViewById(R.id.inputView);
+        outputView = (TextView) getActivity().findViewById(R.id.outputView);
+
+        parser = DaggerParser.create();
+        evaluator = DaggerEvaluator.create();
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inputView.setText(inputView.getText()+"1");
+                NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(inputView.getText().toString()));
+                outputView.setText(Double.toString(n.getValue()));
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {

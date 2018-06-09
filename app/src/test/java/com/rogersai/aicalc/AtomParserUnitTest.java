@@ -1,12 +1,10 @@
 package com.rogersai.aicalc;
 
-import com.rogersai.aicalc.symbol.Symbol;
+import com.rogersai.aicalc.backend.parser.AtomParser;
 import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 

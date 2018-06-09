@@ -1,5 +1,6 @@
 package com.rogersai.aicalc;
 
+import com.rogersai.aicalc.backend.evaluator.InputEvaluator;
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 import com.rogersai.aicalc.symbol.operator.AdditionOperator;
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class EvaluatorTest {
+public class InputEvaluatorTest {
     @Test
     public void twoPlusTwoEqualsFour(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(2));
         input.add(new AdditionOperator());
@@ -30,7 +31,7 @@ public class EvaluatorTest {
     @Test
     public void twoPlusTwoPlusTwoEqualsSix(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(2));
         input.add(new AdditionOperator());
@@ -45,7 +46,7 @@ public class EvaluatorTest {
     @Test
     public void fourTwosEqualsEight(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(2));
         input.add(new AdditionOperator());
@@ -61,7 +62,7 @@ public class EvaluatorTest {
     @Test
     public void add1p2p3p4p5Equals15(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(1));
         input.add(new AdditionOperator());
@@ -80,7 +81,7 @@ public class EvaluatorTest {
     @Test
     public void twoMinusOneEqualsOne(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(2));
         input.add(new SubtractionOperator());
@@ -93,7 +94,7 @@ public class EvaluatorTest {
     @Test
     public void sub3m2m1Equals0(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(3));
         input.add(new SubtractionOperator());
@@ -108,7 +109,7 @@ public class EvaluatorTest {
     @Test
     public void threeTimesFourEqualsTwelve(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(3));
         input.add(new MultiplicationOperator());
@@ -121,7 +122,7 @@ public class EvaluatorTest {
     @Test
     public void eightDivideFourEqualsTwo(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(8));
         input.add(new DivisionOperator());
@@ -134,7 +135,7 @@ public class EvaluatorTest {
     @Test
     public void oop7m3x2Equals1(){
         Parser parser = DaggerParser.create();
-        Evaluator ev = new Evaluator();
+        InputEvaluator ev = new InputEvaluator();
         ArrayList<Symbol> input = new ArrayList<>(3);
         input.add(new NumberAtom(7));
         input.add(new SubtractionOperator());
