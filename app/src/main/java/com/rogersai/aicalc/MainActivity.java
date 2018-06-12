@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.rogersai.aicalc.backend.CalcBackend;
 
+
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private CalcBackend calc;
     private FragmentManager fragmentManager;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(this);
 
         toTapeButton = findViewById(R.id.toTapeButton);
         tapeStripLayout = findViewById(R.id.tapeStripLayout);
@@ -103,19 +105,17 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     @Override
-    public void onTabSelected(TabLayout.Tab tab){
+    public void onTabSelected(TabLayout.Tab tab) {
 
     }
+
     @Override
-    public void onTabUnselected(TabLayout.Tab tab){
+    public void onTabUnselected(TabLayout.Tab tab) {
 
     }
+
     @Override
-    public void onTabReselected(TabLayout.Tab tab){
+    public void onTabReselected(TabLayout.Tab tab) {
 
-    }
-
-    public CalcBackend getCalc() {
-        return calc;
     }
 }

@@ -100,8 +100,10 @@ public class CalcBackend extends Fragment{
     public String reportInput() {
         return input.getText().toString();
     }
-    public void cloud(String s) {
-        cloud.addItem(s);
+    public void cloud(ArrayList<String> cloudList) {
+        for (String s: cloudList) {
+            cloud.addItem(s);
+        }
     }
     public void clearSymbols() {
         this.hasNumberAtom = false;
@@ -114,11 +116,13 @@ public class CalcBackend extends Fragment{
         }
     }
     public void testCloud() {
+        ArrayList<String> cloudList = new ArrayList<>();
         String tag = "";
         for (int i = 0; i <=20; i++) {
             tag = "tag" + i;
-            cloud(tag);
+            cloudList.add(tag);
         }
+        cloud(cloudList);
     }
     //////////////////////
     // Getters and Setters

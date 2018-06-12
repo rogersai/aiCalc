@@ -1,17 +1,16 @@
 package com.rogersai.aicalc;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.rogersai.aicalc.backend.CalcBackend;
-import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
-public class NumberAtomTab extends Fragment {
+import java.util.ArrayList;
+
+public class NumberAtomTab extends AtomTab {
     private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
     private Button buttonLParen, buttonRParen;
     private CalcBackend calc;
@@ -35,7 +34,7 @@ public class NumberAtomTab extends Fragment {
         buttonLParen = (Button) view.findViewById(R.id.buttonLParen);
         buttonRParen = (Button) view.findViewById(R.id.buttonRParen);
 
-        calc = ((MainActivity)getActivity()).getCalc();
+        calc = CalcBackend.getInstance();
 
 //        inputView = (TextView) getActivity().findViewById(R.id.inputView);
 //        outputView = (TextView) getActivity().findViewById(R.id.outputView);
@@ -131,5 +130,12 @@ public class NumberAtomTab extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public ArrayList<String> generateCloudItems() {
+        ArrayList<String> cloudList = new ArrayList<>();
+        cloudList.add("Hello");
+        return cloudList;
     }
 }
