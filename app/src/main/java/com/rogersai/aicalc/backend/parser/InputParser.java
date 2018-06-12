@@ -1,17 +1,19 @@
 package com.rogersai.aicalc.backend.parser;
 
+import com.rogersai.aicalc.backend.CalcBackend;
 import com.rogersai.aicalc.symbol.Symbol;
 
 import java.util.ArrayList;
 
 public class InputParser {
+    private CalcBackend calc;
     private SymbolParser symbolParser;
     private ArrayList<Symbol> inputList;
     private final String reserved = "+-x/()";
 
     public InputParser(SymbolParser sp) {
         symbolParser = sp;
-
+        calc = CalcBackend.getInstance();
     }
 
     public ArrayList<Symbol> parse(String input) {
@@ -39,8 +41,13 @@ public class InputParser {
         }
         System.out.println();
 
+        Symbol curSymbol = null;
         for (int i = 0; i < stringList.size(); i++) {
-            symbolList.add(symbolParser.parse(stringList.get(i)));
+            curSymbol = symbolParser.parse(stringList.get(i));
+            symbolList.add(curSymbol);
+            if (curSymbol.getType().equals("number")){
+                calc.setHasNumberAtom(true);
+            }
         }
         return symbolList;
     }

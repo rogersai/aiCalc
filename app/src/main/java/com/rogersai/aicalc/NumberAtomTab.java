@@ -8,14 +8,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.rogersai.aicalc.backend.CalcBackend;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 public class NumberAtomTab extends Fragment {
     private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
     private Button buttonLParen, buttonRParen;
-    private TextView inputView, outputView;
-    private Parser parser;
-    private Evaluator evaluator;
+    private CalcBackend calc;
+//    private TextView inputView, outputView;
+//    private Parser parser;
+//    private Evaluator evaluator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,84 +35,98 @@ public class NumberAtomTab extends Fragment {
         buttonLParen = (Button) view.findViewById(R.id.buttonLParen);
         buttonRParen = (Button) view.findViewById(R.id.buttonRParen);
 
-        inputView = (TextView) getActivity().findViewById(R.id.inputView);
-        outputView = (TextView) getActivity().findViewById(R.id.outputView);
+        calc = ((MainActivity)getActivity()).getCalc();
 
-        parser = DaggerParser.create();
-        evaluator = DaggerEvaluator.create();
+//        inputView = (TextView) getActivity().findViewById(R.id.inputView);
+//        outputView = (TextView) getActivity().findViewById(R.id.outputView);
+//
+//        parser = DaggerParser.create();
+//        evaluator = DaggerEvaluator.create();
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"1");
-                NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(inputView.getText().toString()));
-                outputView.setText(Double.toString(n.getValue()));
+                calc.input("1");
+                //inputView.setText(inputView.getText()+"1");
+                //NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(inputView.getText().toString()));
+                //outputView.setText(Double.toString(n.getValue()));
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"2");
+                calc.input("2");
+                //inputView.setText(inputView.getText()+"2");
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"3");
+                calc.input("3");
+                //inputView.setText(inputView.getText()+"3");
             }
         });
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"4");
+                calc.input("4");
+                //inputView.setText(inputView.getText()+"4");
             }
         });
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"5");
+                calc.input("5");
+                //inputView.setText(inputView.getText()+"5");
             }
         });
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"6");
+                calc.input("6");
+                //inputView.setText(inputView.getText()+"6");
             }
         });
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"7");
+                calc.input("7");
+                //inputView.setText(inputView.getText()+"7");
             }
         });
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"8");
+                calc.input("8");
+                //inputView.setText(inputView.getText()+"8");
             }
         });
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"9");
+                calc.input("9");
+                //inputView.setText(inputView.getText()+"9");
             }
         });
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"0");
+                calc.input("0");
+                //inputView.setText(inputView.getText()+"0");
             }
         });
         buttonLParen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"(");
+                calc.input("(");
+                //inputView.setText(inputView.getText()+"(");
             }
         });
         buttonRParen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+")");
+                calc.input(")");
+                //inputView.setText(inputView.getText()+")");
             }
         });
 

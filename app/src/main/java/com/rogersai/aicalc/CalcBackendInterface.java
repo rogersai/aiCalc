@@ -15,8 +15,8 @@ import dagger.Component;
 @Singleton
 @Component(modules = CalcBackendModule.class)
 public interface CalcBackendInterface {
-//    Parser parser();
-//    Evaluator evaluator();
+//    Parser getParser();
+//    Evaluator getEvaluator();
 //    TextView input();
 //    TextView output();
 

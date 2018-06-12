@@ -11,104 +11,79 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.rogersai.aicalc.backend.CalcBackend;
-import com.rogersai.aicalc.cloudlayout.CloudLayout;
-import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
-    private ConstraintLayout cloudContainer;
-    private CloudLayout cloudLayout;
+    private CalcBackend calc;
+    private FragmentManager fragmentManager;
 
     private LinearLayout tapeStripLayout;
     private Button toTapeButton;
-
-    private TextView inputView, outputView;
 
     private Button buttonMultiply, buttonDivide, buttonSubtract, buttonAdd, buttonEnter, buttonClear;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private FragmentManager fragmentManager;
-
-    //private CalcBackendInterface calc;
-    private CalcBackend calc;
-    private Parser parser;
-    private Evaluator evaluator;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //calc = DaggerCalcBackendInterface.create();
-        calc = CalcBackend.newInstance(this);
-        parser = calc.parser();
-        evaluator = calc.evaluator();
-        inputView = calc.input();
-        outputView = calc.output();
+
+        calc = CalcBackend.getInstance(this);
         fragmentManager = getSupportFragmentManager();
 
-        cloudContainer = (ConstraintLayout) findViewById(R.id.cloudContainer);
-        cloudLayout = CloudLayout.newInstance();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment cl = (Fragment) cloudLayout;
-        ft.add(cloudContainer.getId(), cl, "cloudLayout");
-        ft.commit();
-
-        tabLayout = (TabLayout) findViewById(R.id.atomTabLayout);
-        viewPager = (ViewPager) findViewById(R.id.atomViewPager);
+        tabLayout =  findViewById(R.id.atomTabLayout);
+        viewPager = findViewById(R.id.atomViewPager);
         Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        buttonMultiply = (Button) findViewById(R.id.buttonMultiply);
-        buttonDivide= (Button) findViewById(R.id.buttonDivide);
-        buttonSubtract= (Button) findViewById(R.id.buttonSubtract);
-        buttonAdd= (Button) findViewById(R.id.buttonAdd);
-        buttonEnter= (Button) findViewById(R.id.buttonEnter);
-        buttonClear= (Button) findViewById(R.id.buttonClear);
-        toTapeButton = (Button) findViewById(R.id.toTapeButton);
-        //inputView = (TextView) findViewById(R.id.inputView);
-        outputView = (TextView) findViewById(R.id.outputView);
-        tapeStripLayout = (LinearLayout) findViewById(R.id.tapeStripLayout);
+        toTapeButton = findViewById(R.id.toTapeButton);
+        tapeStripLayout = findViewById(R.id.tapeStripLayout);
+
+        buttonMultiply = findViewById(R.id.buttonMultiply);
+        buttonDivide= findViewById(R.id.buttonDivide);
+        buttonSubtract= findViewById(R.id.buttonSubtract);
+        buttonAdd= findViewById(R.id.buttonAdd);
+        buttonEnter= findViewById(R.id.buttonEnter);
+        buttonClear= findViewById(R.id.buttonClear);
 
         buttonMultiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"x");
+                calc.input("x");
             }
         });
         buttonDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"/");
+                calc.input("/");
             }
         });
         buttonSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"-");
+                calc.input("-");
             }
         });
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+"+");
+                calc.input("+");
             }
         });
         buttonEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(inputView.getText().toString()));
-                outputView.setText(Double.toString(n.getValue()));
+                calc.evaluate();
             }
         });
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText("");
+                calc.clear();
             }
         });
         toTapeButton.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             public void onClick(View v) {
                 int itemID = 0;
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment tapeItem= TapeLayoutItem.newInstance(inputView.getText().toString());
+                Fragment tapeItem= TapeLayoutItem.newInstance(calc.reportInput());
                 if(tapeItem.getArguments() != null) {
                     itemID = tapeItem.getArguments().getInt("itemID");
                 }
@@ -138,5 +113,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onTabReselected(TabLayout.Tab tab){
 
+    }
+
+    public CalcBackend getCalc() {
+        return calc;
     }
 }

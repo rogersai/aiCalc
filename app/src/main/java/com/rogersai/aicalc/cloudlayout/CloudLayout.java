@@ -23,7 +23,6 @@ public class CloudLayout extends Fragment {
         View view = inflater.inflate(R.layout.cloud_layout_view, container, false);
         fragmentManager = getFragmentManager();
         cloudLayoutView = (CloudLayoutView) view;
-        testSelf();
         return view;
     }
 
