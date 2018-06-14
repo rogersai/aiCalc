@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.rogersai.aicalc.cloudlayout.CloudLayoutView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cloudLayout"
+<com.rogersai.aicalc.cloud.CloudView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cloudView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</com.rogersai.aicalc.cloudlayout.CloudLayoutView>
+</com.rogersai.aicalc.cloud.CloudView>

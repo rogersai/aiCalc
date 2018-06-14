@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import com.rogersai.aicalc.backend.CalcBackend;
 
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+public class MainActivity extends AppCompatActivity {
     private CalcBackend calc;
     private FragmentManager fragmentManager;
 
@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     private Button buttonMultiply, buttonDivide, buttonSubtract, buttonAdd, buttonEnter, buttonClear;
 
-    private TabLayout tabLayout;
     private ViewPager viewPager;
 
     @Override
@@ -35,12 +34,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         calc = CalcBackend.getInstance(this);
         fragmentManager = getSupportFragmentManager();
 
-        tabLayout =  findViewById(R.id.atomTabLayout);
-        viewPager = findViewById(R.id.atomViewPager);
-        Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.addOnTabSelectedListener(this);
+//        viewPager = findViewById(R.id.atomViewPager);
+//        Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
+//        viewPager.setAdapter(adapter);
+//        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.addOnTabSelectedListener(this);
 
         toTapeButton = findViewById(R.id.toTapeButton);
         tapeStripLayout = findViewById(R.id.tapeStripLayout);
@@ -85,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                calc.testRegister();
                 calc.clear();
             }
         });
@@ -104,18 +103,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
+//    @Override
+//    public void onTabSelected(TabLayout.Tab tab) {
+//
+//    }
+//
+//    @Override
+//    public void onTabUnselected(TabLayout.Tab tab) {
+//
+//    }
+//
+//    @Override
+//    public void onTabReselected(TabLayout.Tab tab) {
+//
+//    }
 }

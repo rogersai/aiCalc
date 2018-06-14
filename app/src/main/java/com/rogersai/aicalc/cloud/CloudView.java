@@ -1,22 +1,20 @@
-package com.rogersai.aicalc.cloudlayout;
+package com.rogersai.aicalc.cloud;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CloudLayoutView extends ViewGroup {
+public class CloudView extends ViewGroup {
     int deviceWidth;
 
-    public CloudLayoutView(Context context) {
+    public CloudView(Context context) {
         super(context);
     }
-    public CloudLayoutView(Context context, AttributeSet attributeSet) {
+    public CloudView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
-    public CloudLayoutView(Context context, AttributeSet attributeSet, int defStyleAttr) {
+    public CloudView(Context context, AttributeSet attributeSet, int defStyleAttr) {
         super(context, attributeSet, defStyleAttr);
     }
 

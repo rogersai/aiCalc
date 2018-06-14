@@ -1,4 +1,4 @@
-package com.rogersai.aicalc.cloudlayout;
+package com.rogersai.aicalc.cloud;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,19 +10,19 @@ import android.view.ViewGroup;
 
 import com.rogersai.aicalc.R;
 
-public class CloudLayout extends Fragment {
+public class CloudFragment extends Fragment {
     private FragmentManager fragmentManager;
-    private CloudLayoutView cloudLayoutView;
+    private CloudView cloudView;
 
-    public static CloudLayout newInstance() {
-       CloudLayout layout = new CloudLayout();
+    public static CloudFragment newInstance() {
+       CloudFragment layout = new CloudFragment();
        return layout;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cloud_layout_view, container, false);
         fragmentManager = getFragmentManager();
-        cloudLayoutView = (CloudLayoutView) view;
+        cloudView = (CloudView) view;
         return view;
     }
 
@@ -30,13 +30,17 @@ public class CloudLayout extends Fragment {
         int itemID = 0;
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment cloudItem = CloudLayoutItem.newInstance(itemText);
+        Fragment cloudItem = CloudItem.newInstance(itemText);
         if(cloudItem.getArguments() != null) {
             itemID = cloudItem.getArguments().getInt("itemID");
         }
-        fragmentTransaction.add(cloudLayoutView.getId(), cloudItem, "cloud" + itemID);
+        fragmentTransaction.add(cloudView.getId(), cloudItem, "cloud" + itemID);
         fragmentTransaction.commit();
 
+    }
+
+    public void clear() {
+        cloudView.removeAllViewsInLayout();
     }
 
     public void testSelf() {

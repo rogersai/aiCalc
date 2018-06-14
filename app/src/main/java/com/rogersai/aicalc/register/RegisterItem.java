@@ -1,4 +1,4 @@
-package com.rogersai.aicalc.cloudlayout;
+package com.rogersai.aicalc.register;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,20 +9,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rogersai.aicalc.R;
+import com.rogersai.aicalc.backend.CalcBackend;
 
-public class CloudLayoutItem extends Fragment {
-    private String itemText;
+public class RegisterItem extends Fragment {
+    private CalcBackend calc;
+
+    private TextView formula;
+    private TextView result;
+
+    private String formulaString;
+
     private int itemID;
     private static int nextID = 0;
 
-    private TextView textView;
-    private TextView inputView;
     private FragmentManager fragmentManager;
 
-    public static CloudLayoutItem newInstance(String text) {
-        CloudLayoutItem item = new CloudLayoutItem();
+    public static RegisterItem newInstance(String text) {
+        RegisterItem item = new RegisterItem();
         Bundle args = new Bundle();
-        args.putString("itemText", text);
+        args.putString("formulaString", text);
         args.putInt("itemID", nextID);
         item.setArguments(args);
         nextID++;
@@ -31,22 +36,21 @@ public class CloudLayoutItem extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.cloud_layout_item, container, false);
+        View view = inflater.inflate(R.layout.register_item, container, false);
 
-        textView = (TextView) view.findViewById(R.id.itemTextView);
-        inputView = (TextView) getActivity().findViewById(R.id.inputView);
+        formula = (TextView) view.findViewById(R.id.formulaView);
+        result = (TextView) view.findViewById(R.id.resultView);
 
         if(getArguments() != null) {
-            itemText = this.getArguments().getString("itemText");
+            formulaString = this.getArguments().getString("formulaString");
         }
 
-        textView.setText(itemText);
+        formula.setText(formulaString);
 
         fragmentManager = getFragmentManager();
-        textView.setOnClickListener(new View.OnClickListener() {
+        formula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+ getItemText());
             }
         });
         return view;
@@ -56,7 +60,7 @@ public class CloudLayoutItem extends Fragment {
         return itemID;
     }
 
-    public String getItemText() {
-        return itemText;
+    public String getFormulaString() {
+        return formulaString;
     }
 }

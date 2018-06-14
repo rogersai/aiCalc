@@ -1,4 +1,4 @@
-package com.rogersai.aicalc;
+package com.rogersai.aicalc.atominput;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,18 +6,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.rogersai.aicalc.AtomTab;
+import com.rogersai.aicalc.CloudGenerator;
+import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.backend.CalcBackend;
+import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 import java.util.ArrayList;
 
-public class NumberAtomTab extends AtomTab {
+public class NumberAtomTab extends AtomTab implements CloudGenerator{
     private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
     private Button buttonLParen, buttonRParen;
     private CalcBackend calc;
+
+    private static NumberAtomTab instance;
 //    private TextView inputView, outputView;
 //    private Parser parser;
 //    private Evaluator evaluator;
 
+    public static NumberAtomTab getInstance() {
+        if (instance == null) {
+            instance = new NumberAtomTab();
+        }
+        return instance;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.number_atom_tab, container, false) ;
@@ -135,7 +147,7 @@ public class NumberAtomTab extends AtomTab {
     @Override
     public ArrayList<String> generateCloudItems() {
         ArrayList<String> cloudList = new ArrayList<>();
-        cloudList.add("Hello");
+        cloudList.add("Number");
         return cloudList;
     }
 }
