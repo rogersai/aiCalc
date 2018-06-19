@@ -14,8 +14,8 @@ import com.rogersai.aicalc.Parser;
 import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.cloud.CloudFragment;
 import com.rogersai.aicalc.register.RegisterFragment;
-import com.rogersai.aicalc.register.RegisterView;
 import com.rogersai.aicalc.symbol.Symbol;
+import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 import com.rogersai.aicalc.atominput.AtomFragment;
 
@@ -48,7 +48,7 @@ public class CalcBackend extends Fragment{
 
     private ArrayList<Symbol> parsedList;
 
-    public static CalcBackend getInstance(MainActivity mainActivity) {
+    public static CalcBackend getInstance(final MainActivity mainActivity) {
         if(calc== null) {
             calc = new CalcBackend();
 
@@ -83,6 +83,17 @@ public class CalcBackend extends Fragment{
             Fragment rg = (Fragment) calc.register;
             ft.add(registerContainer.getId(), rg, "registerLayout");
             ft.commit();
+
+//            mainActivity.findViewById(R.id.mainLayout).setOnTouchListener(new OnSwipeTouchListener(mainActivity.getApplicationContext()){
+//                @Override
+//                public void onSwipeLeft() {
+//                    mainActivity.findViewById(R.id.registerContainer).setVisibility(View.GONE);
+//                }
+//                @Override
+//                public void onSwipeRight() {
+//                    mainActivity.findViewById(R.id.registerContainer).setVisibility(View.VISIBLE);
+//                }
+//            });
 
         }
         return calc;
@@ -121,6 +132,13 @@ public class CalcBackend extends Fragment{
         output.setText(Double.toString(n.getValue()));
     }
 
+    //TODO: Commit to github
+    //TODO: Refactor evaluate methods to work more generally
+    public Atom evaluate(String s) {
+        NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(s));
+        return n;
+    }
+
     public String reportInput() {
         return input.getText().toString();
     }
@@ -133,7 +151,7 @@ public class CalcBackend extends Fragment{
 
     public void register(ArrayList<String> registerList) {
         for (String s: registerList) {
-            register.addItem(s);
+            register.add(s);
         }
     }
 
@@ -144,6 +162,10 @@ public class CalcBackend extends Fragment{
     public void repopulateCloud() {
         clearCloud();
         cloud(tabs.getBackend().generateCloudItems());
+    }
+    public void registerInput() {
+        String formulaString = input.getText().toString();
+        register.add(formulaString);
     }
     public void clearSymbols() {
         this.hasNumberAtom = false;
@@ -164,6 +186,10 @@ public class CalcBackend extends Fragment{
         }
         cloud(cloudList);
     }
+    public void clearRegister() {
+            register.clear();
+    }
+
     public void testRegister() {
         ArrayList<String> registerList = new ArrayList<>();
         String tag = "";
@@ -208,5 +234,9 @@ public class CalcBackend extends Fragment{
     }
     private void setFm(FragmentManager fm) {
         this.fm = fm;
+    }
+
+    public void removeReg(int id) {
+        register.remove(id);
     }
 }

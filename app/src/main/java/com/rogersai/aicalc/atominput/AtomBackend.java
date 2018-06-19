@@ -58,7 +58,7 @@ public class AtomBackend extends TabLayout.ViewPagerOnTabSelectedListener implem
 
     }
 
-//    public void addItem(String itemText) {
+//    public void add(String itemText) {
 //        int itemID = 0;
 //
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -76,7 +76,7 @@ public class AtomBackend extends TabLayout.ViewPagerOnTabSelectedListener implem
 //        int itemID = 0;
 //        for (int i = 0; i <=20; i++) {
 //            tag = "tag" + i;
-//            addItem(tag);
+//            add(tag);
 //        }
 //    }
 public void setAtomFragment(AtomFragment atomFragment) {

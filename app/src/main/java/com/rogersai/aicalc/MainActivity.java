@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.rogersai.aicalc.backend.CalcBackend;
+import com.rogersai.aicalc.register.DbConfigInitializer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
 
     private LinearLayout tapeStripLayout;
-    private Button toTapeButton;
+    private Button toTapeButton, toRegisterButton;
 
     private Button buttonMultiply, buttonDivide, buttonSubtract, buttonAdd, buttonEnter, buttonClear;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 //        tabLayout.addOnTabSelectedListener(this);
 
         toTapeButton = findViewById(R.id.toTapeButton);
+        toRegisterButton = findViewById(R.id.buttonInputToRegister);
         tapeStripLayout = findViewById(R.id.tapeStripLayout);
 
         buttonMultiply = findViewById(R.id.buttonMultiply);
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calc.testRegister();
                 calc.clear();
             }
         });
@@ -99,6 +100,22 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("tape" + itemID + " added");
                 fragmentTransaction.add(tapeStripLayout.getId(), tapeItem, "tape" + itemID);
                 fragmentTransaction.commit();
+            }
+        });
+        toRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calc.registerInput();
+            }
+        });
+        findViewById(R.id.mainLayout).setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()){
+            @Override
+            public void onSwipeLeft() {
+                findViewById(R.id.registerContainer).setVisibility(View.GONE);
+            }
+            @Override
+            public void onSwipeRight() {
+                findViewById(R.id.registerContainer).setVisibility(View.VISIBLE);
             }
         });
     }

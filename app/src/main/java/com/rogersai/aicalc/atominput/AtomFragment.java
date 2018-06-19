@@ -40,7 +40,7 @@ public class AtomFragment extends Fragment {
         return view;
     }
 
-//    public void addItem(String itemText) {
+//    public void add(String itemText) {
 //        int itemID = 0;
 //
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -58,7 +58,7 @@ public class AtomFragment extends Fragment {
 //        int itemID = 0;
 //        for (int i = 0; i <=20; i++) {
 //            tag = "tag" + i;
-//            addItem(tag);
+//            add(tag);
 //        }
 //    }
     public AtomBackend getBackend() {

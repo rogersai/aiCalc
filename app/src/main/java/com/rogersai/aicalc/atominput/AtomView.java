@@ -92,7 +92,7 @@ public class AtomView extends ConstraintLayout {
 //        setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState), resolveSizeAndState(maxHeight, heightMeasureSpec, childState << MEASURED_HEIGHT_STATE_SHIFT));
 //    }
 //
-//    public void addItem(String itemText) {
+//    public void add(String itemText) {
 //
 //    }
 }
