@@ -1,7 +1,5 @@
 package com.rogersai.aicalc;
 
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +11,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.rogersai.aicalc.backend.CalcBackend;
-import com.rogersai.aicalc.register.DbConfigInitializer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         buttonEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calc.evaluate();
+                calc.evaluateInput();
             }
         });
         buttonClear.setOnClickListener(new View.OnClickListener() {

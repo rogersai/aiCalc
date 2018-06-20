@@ -59,7 +59,7 @@ public class NumberAtomTab extends AtomTab implements CloudGenerator{
             public void onClick(View v) {
                 calc.input("1");
                 //inputView.setText(inputView.getText()+"1");
-                //NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(inputView.getText().toString()));
+                //NumberAtom n = (NumberAtom) evaluator.input().evaluateInput(parser.input().parseInput(inputView.getText().toString()));
                 //outputView.setText(Double.toString(n.getValue()));
             }
         });

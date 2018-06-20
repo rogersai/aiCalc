@@ -53,6 +53,7 @@ public class RegisterItem extends Fragment {
         formula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                calculate();
             }
         });
         removeButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +66,7 @@ public class RegisterItem extends Fragment {
     }
 
     public void calculate() {
-        String resultText = calc.evaluate(formulaString);
+        String resultText = calc.evaluate(formulaString).toString();
         result.setText(resultText);
     }
 

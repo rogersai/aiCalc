@@ -8,14 +8,11 @@ public class Symbol {
     protected String category;
     protected String type;
 
-    public NumberAtom toNumber() {
-        return new NumberAtom(0);
-    }
-
     public Symbol() {
         category = "category";
         type = "type";
     }
+
     public String getCategory() {
         return category;
     }
@@ -31,5 +28,9 @@ public class Symbol {
         Symbol symbol = (Symbol) o;
         return Objects.equals(category, symbol.category) &&
                 Objects.equals(type, symbol.type);
+    }
+
+    @Override public String toString() {
+        return type + " " + category;
     }
 }

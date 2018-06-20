@@ -104,18 +104,43 @@ public class CalcBackend extends Fragment{
     }
 
 
-    ///////////////
-    // Main Methods
-    ///////////////
+
+    //////////////////////
+    // Processing Functions
+    //////////////////////
+    //TODO: Refactor evaluateInput methods to work more generally
+    public ArrayList<Symbol> parse(String s){
+        parsedList = parser.input().parse(s);
+        return parsedList;
+    }
+
+    public Atom evaluate(String s) {
+        NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(s));
+        return n;
+    }
+
+    //////////////////////
+    // Display Functions
+    //////////////////////
     public void input(String s) {
         if(!input.getText().equals("") && operators.contains(s) && getLastCategory().equals("operator")) {
             input.setText(input.getText().subSequence(0, input.getText().length() - 1));
         }
         input.setText(input.getText() + s);
-        parse();
+        parseInput();
         if(getLastCategory().equals("atom")){
-            evaluate();
+            evaluateInput();
         }
+    }
+
+    public void parseInput() {
+        parsedList = parse(input.getText().toString());
+    }
+
+    public void evaluateInput() {
+        NumberAtom n = (NumberAtom)evaluate(input.getText().toString());
+        //NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parseInput(input.getText().toString()));
+        output.setText(Double.toString(n.getValue()));
     }
 
     public void clear() {
@@ -123,35 +148,12 @@ public class CalcBackend extends Fragment{
         clearSymbols();
     }
 
-    public void parse() {
-        parsedList = parser.input().parse(input.getText().toString());
-    }
-
-    public void evaluate() {
-        NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(input.getText().toString()));
-        output.setText(Double.toString(n.getValue()));
-    }
-
-    //TODO: Commit to github
-    //TODO: Refactor evaluate methods to work more generally
-    public Atom evaluate(String s) {
-        NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(s));
-        return n;
-    }
-
-    public String reportInput() {
-        return input.getText().toString();
-    }
-
+    //////////////////////
+    // Cloud Functions
+    //////////////////////
     public void cloud(ArrayList<String> cloudList) {
         for (String s: cloudList) {
             cloud.addItem(s);
-        }
-    }
-
-    public void register(ArrayList<String> registerList) {
-        for (String s: registerList) {
-            register.add(s);
         }
     }
 
@@ -163,20 +165,6 @@ public class CalcBackend extends Fragment{
         clearCloud();
         cloud(tabs.getBackend().generateCloudItems());
     }
-    public void registerInput() {
-        String formulaString = input.getText().toString();
-        register.add(formulaString);
-    }
-    public void clearSymbols() {
-        this.hasNumberAtom = false;
-    }
-    private String getLastCategory() {
-        if(!parsedList.isEmpty()) {
-            return parsedList.get(parsedList.size() - 1).getCategory();
-        } else {
-            return "";
-        }
-    }
     public void testCloud() {
         ArrayList<String> cloudList = new ArrayList<>();
         String tag = "";
@@ -185,6 +173,20 @@ public class CalcBackend extends Fragment{
             cloudList.add(tag);
         }
         cloud(cloudList);
+    }
+
+    //////////////////////
+    // Register Functions
+    //////////////////////
+    public void register(ArrayList<String> registerList) {
+        for (String s: registerList) {
+            register.add(s);
+        }
+    }
+
+    public void registerInput() {
+        String formulaString = input.getText().toString();
+        register.add(formulaString);
     }
     public void clearRegister() {
             register.clear();
@@ -199,15 +201,33 @@ public class CalcBackend extends Fragment{
         }
         register(registerList);
     }
+    public void removeReg(int id) {
+        register.remove(id);
+    }
+    ///////////////
+    // Support Methods
+    ///////////////
+    public String reportInput() {
+        return input.getText().toString();
+    }
+
+    public void clearSymbols() {
+        this.hasNumberAtom = false;
+    }
+    private String getLastCategory() {
+        if(!parsedList.isEmpty()) {
+            return parsedList.get(parsedList.size() - 1).getCategory();
+        } else {
+            return "";
+        }
+    }
     //////////////////////
     // Getters and Setters
     //////////////////////
-    public FragmentManager getFm() {
-        return fm;
-    }
     public void setHasNumberAtom(boolean hasNumberAtom) {
         this.hasNumberAtom = hasNumberAtom;
     }
+
     private void setParser(Parser parser) {
         this.parser = parser;
     }
@@ -223,20 +243,21 @@ public class CalcBackend extends Fragment{
     private void setOutput(TextView output) {
         this.output = output;
     }
+
     private void setCloud(CloudFragment cloudFragment) {
         this.cloud= cloudFragment;
     }
+
     private void setTabs(AtomFragment tabs) {
         this.tabs = tabs;
     }
+
     private void setRegister(RegisterFragment register) {
         this.register = register;
     }
+
     private void setFm(FragmentManager fm) {
         this.fm = fm;
     }
 
-    public void removeReg(int id) {
-        register.remove(id);
-    }
 }

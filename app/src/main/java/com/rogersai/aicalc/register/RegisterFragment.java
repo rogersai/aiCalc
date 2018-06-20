@@ -53,7 +53,7 @@ public class RegisterFragment extends Fragment {
         buttonCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calc.testRegister();
+                calculateAll();
             }
         });
 
@@ -126,5 +126,14 @@ public class RegisterFragment extends Fragment {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.remove(fragmentManager.findFragmentByTag("reg" + id));
         ft.commit();
+    }
+
+    public void calculateAll() {
+        RuntimeExceptionDao<RegisterEntry, Integer> registerDao = getHelper().getRegisterDao();
+        for(RegisterEntry re : registerDao.queryForAll()) {
+            int id = re.getId();
+            RegisterItem ri = (RegisterItem) fragmentManager.findFragmentByTag("reg" + id);
+            ri.calculate();
+        }
     }
 }

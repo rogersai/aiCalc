@@ -8,5 +8,8 @@ public class Atom extends Symbol {
         super();
         category = "atom";
     }
+    public NumberAtom toNumber() {
+        return null;
+    }
 }
 
