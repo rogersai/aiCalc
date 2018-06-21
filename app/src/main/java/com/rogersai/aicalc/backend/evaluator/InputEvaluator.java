@@ -1,6 +1,7 @@
 package com.rogersai.aicalc.backend.evaluator;
 
 import com.rogersai.aicalc.symbol.Symbol;
+import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 import com.rogersai.aicalc.symbol.grouper.Grouper;
 import com.rogersai.aicalc.symbol.grouper.LParenGrouper;
@@ -24,7 +25,7 @@ public class InputEvaluator {
             for (int i = 0; i < workingList.size(); i++) {
                 if (workingList.get(i).getType().equals("multiplication") || workingList.get(i).getType().equals("division")) {
                     Operator op = (Operator) workingList.get(i);
-                    Symbol result = op.operate(workingList.get(i - 1), workingList.get(i + 1));
+                    Symbol result = op.operate((Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1));
                     workingList.set(i, result);
                     workingList.remove(i + 1);
                     workingList.remove(i - 1);
@@ -36,7 +37,7 @@ public class InputEvaluator {
             for (int i = 0; i < workingList.size(); i++) {
                 if (workingList.get(i).getType().equals("addition") || workingList.get(i).getType().equals("subtraction")) {
                     Operator op = (Operator) workingList.get(i);
-                    Symbol result = op.operate(workingList.get(i - 1), workingList.get(i + 1));
+                    Symbol result = op.operate((Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1));
                     workingList.set(i, result);
                     workingList.remove(i + 1);
                     workingList.remove(i - 1);

@@ -1,21 +1,34 @@
 package com.rogersai.aicalc;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.rogersai.aicalc.atominput.AtomBackend;
+import com.rogersai.aicalc.atominput.AtomFragment;
 import com.rogersai.aicalc.backend.CalcBackend;
+import com.rogersai.aicalc.cloud.CloudBackend;
+import com.rogersai.aicalc.cloud.CloudFragment;
+import com.rogersai.aicalc.register.RegisterBackend;
+import com.rogersai.aicalc.register.RegisterFragment;
+import com.rogersai.aicalc.symbol.atom.Atom;
 
 
 public class MainActivity extends AppCompatActivity {
     private CalcBackend calc;
-    private FragmentManager fragmentManager;
+    private AtomFragment atomFragment;
+    private CloudFragment cloudFragment;
+    private RegisterFragment registerFragment;
+    private FragmentManager fm;
 
     private LinearLayout tapeStripLayout;
     private Button toTapeButton, toRegisterButton;
@@ -24,19 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calc = CalcBackend.getInstance(this);
-        fragmentManager = getSupportFragmentManager();
-
-//        viewPager = findViewById(R.id.atomViewPager);
-//        Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
-//        viewPager.setAdapter(adapter);
-//        tabLayout.setupWithViewPager(viewPager);
-//        tabLayout.addOnTabSelectedListener(this);
+        calc = CalcBackend.newInstance(this);
+        fm = getSupportFragmentManager();
 
         toTapeButton = findViewById(R.id.toTapeButton);
         toRegisterButton = findViewById(R.id.buttonInputToRegister);
@@ -89,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int itemID = 0;
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
                 Fragment tapeItem= TapeLayoutItem.newInstance(calc.reportInput());
                 if(tapeItem.getArguments() != null) {
                     itemID = tapeItem.getArguments().getInt("itemID");
@@ -115,20 +123,30 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.registerContainer).setVisibility(View.VISIBLE);
             }
         });
+        cloudFragment = CloudFragment.getInstance();
+        registerFragment = RegisterFragment.getInstance();
+        atomFragment = AtomFragment.getInstance();
+
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+        ConstraintLayout cloudContainer = (ConstraintLayout) findViewById(R.id.cloudContainer);
+        Fragment cf = (Fragment) cloudFragment;
+        fragmentTransaction.add(cloudContainer.getId(), cf, "cloudLayout");
+
+        ConstraintLayout registerContainer = (ConstraintLayout) findViewById(R.id.registerContainer);
+        Fragment rf = (Fragment) registerFragment;
+        fragmentTransaction.add(registerContainer.getId(), rf, "registerLayout");
+
+        ConstraintLayout tabContainer = (ConstraintLayout) findViewById(R.id.tabContainer);
+        Fragment af = (Fragment) atomFragment;
+        fragmentTransaction.add(tabContainer.getId(), af, "tabLayout");
+
+        fragmentTransaction.commit();
+
+        calc.setCloud(cloudFragment.getCloudBackend());
+        calc.setRegister(registerFragment.getRegisterBackend());
+        calc.setAtomBackend(atomFragment.getAtomBackend());
+
     }
 
-//    @Override
-//    public void onTabSelected(TabLayout.Tab tab) {
-//
-//    }
-//
-//    @Override
-//    public void onTabUnselected(TabLayout.Tab tab) {
-//
-//    }
-//
-//    @Override
-//    public void onTabReselected(TabLayout.Tab tab) {
-//
-//    }
 }

@@ -148,6 +148,7 @@ public class NumberAtomTab extends AtomTab implements CloudGenerator{
     public ArrayList<String> generateCloudItems() {
         ArrayList<String> cloudList = new ArrayList<>();
         cloudList.add("Number");
+        System.out.println("NUMBER");
         return cloudList;
     }
 }

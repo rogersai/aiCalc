@@ -11,44 +11,40 @@ import android.view.ViewGroup;
 import com.rogersai.aicalc.R;
 
 public class CloudFragment extends Fragment {
-    private FragmentManager fragmentManager;
+    private static CloudFragment instance;
+    private FragmentManager fm;
+    private CloudBackend cloudBackend;
     private CloudView cloudView;
-
-    public static CloudFragment newInstance() {
-       CloudFragment layout = new CloudFragment();
-       return layout;
-    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cloud_layout_view, container, false);
-        fragmentManager = getFragmentManager();
-        cloudView = (CloudView) view;
+        cloudView = view.findViewById(R.id.cloudView);
+        fm = getActivity().getSupportFragmentManager();
+
+        cloudBackend = CloudBackend.getInstance(this);
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment cb = (Fragment) cloudBackend;
+        ft.add(cloudView.getId(), cb, "cloudBackend");
+        ft.commit();
         return view;
     }
 
-    public void addItem(String itemText) {
-        int itemID = 0;
-
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment cloudItem = CloudItem.newInstance(itemText);
-        if(cloudItem.getArguments() != null) {
-            itemID = cloudItem.getArguments().getInt("itemID");
+    public static CloudFragment getInstance() {
+        if(instance == null){
+            instance = new CloudFragment();
+            instance.setCloudBackend(CloudBackend.getInstance(instance));
         }
-        fragmentTransaction.add(cloudView.getId(), cloudItem, "cloud" + itemID);
-        fragmentTransaction.commit();
-
+        return instance;
     }
 
-    public void clear() {
-        cloudView.removeAllViewsInLayout();
+    public CloudView getCloudView() {
+        return cloudView;
+    }
+    public CloudBackend getCloudBackend() {
+        return cloudBackend;
     }
 
-    public void testSelf() {
-        String tag = "";
-        int itemID = 0;
-        for (int i = 0; i <=20; i++) {
-            tag = "tag" + i;
-            addItem(tag);
-        }
+    public void setCloudBackend(CloudBackend cloudBackend) {
+        this.cloudBackend = cloudBackend;
     }
 }

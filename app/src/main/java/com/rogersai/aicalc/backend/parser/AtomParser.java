@@ -7,7 +7,7 @@ public class AtomParser {
     public Atom parse(String input){
         double value = 0;
         try {
-            value = Integer.parseInt(input);
+            value = Double.parseDouble(input);
         } catch(NumberFormatException e) {
             System.out.println("Exception: " + e.getMessage());
         }

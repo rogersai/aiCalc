@@ -12,12 +12,15 @@ import com.rogersai.aicalc.Evaluator;
 import com.rogersai.aicalc.MainActivity;
 import com.rogersai.aicalc.Parser;
 import com.rogersai.aicalc.R;
+import com.rogersai.aicalc.atominput.AtomBackend;
+import com.rogersai.aicalc.atominput.AtomFragment;
+import com.rogersai.aicalc.cloud.CloudBackend;
 import com.rogersai.aicalc.cloud.CloudFragment;
+import com.rogersai.aicalc.register.RegisterBackend;
 import com.rogersai.aicalc.register.RegisterFragment;
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
-import com.rogersai.aicalc.atominput.AtomFragment;
 
 import java.util.ArrayList;
 
@@ -30,16 +33,23 @@ public class CalcBackend extends Fragment{
 
     private FragmentManager fm;
 
+    private AtomBackend tabs;
+    private CloudBackend cloud;
+    private RegisterBackend register;
+
+    private AtomFragment atomFragment;
+
     private Parser parser;
     private Evaluator evaluator;
 
     private TextView input;
     private TextView output;
+    private Atom outputAtom;
 
-    private CloudFragment cloud;
-    private AtomFragment tabs;
+    //private CloudFragment cloud;
+    //private AtomFragment tabs;
 
-    private RegisterFragment register;
+//    private RegisterFragment register;
 
     private boolean hasNumberAtom;
 
@@ -48,53 +58,25 @@ public class CalcBackend extends Fragment{
 
     private ArrayList<Symbol> parsedList;
 
-    public static CalcBackend getInstance(final MainActivity mainActivity) {
+    public static CalcBackend newInstance(final MainActivity mainActivity) {
         if(calc== null) {
             calc = new CalcBackend();
 
             calc.setFm(mainActivity.getSupportFragmentManager());
 
+
+            //calc.setAtomBackend(AtomBackend.newInstance(mainActivity));
+//            calc.setCloud(CloudBackend.newInstance());
+//            calc.setRegister(RegisterBackend.newInstance(mainActivity));
+//
             calc.setParser(DaggerParser.create());
             calc.setEvaluator(DaggerEvaluator.create());
 
             calc.setInput((TextView) mainActivity.findViewById(R.id.inputView));
             calc.setOutput((TextView) mainActivity.findViewById(R.id.outputView));
 
-            ConstraintLayout cloudContainer = (ConstraintLayout) mainActivity.findViewById(R.id.cloudContainer);
-            calc.setCloud(CloudFragment.newInstance());
-
-            ConstraintLayout tabContainer = (ConstraintLayout) mainActivity.findViewById(R.id.tabContainer);
-            calc.setTabs(AtomFragment.newInstance());
-
-            ConstraintLayout registerContainer = (ConstraintLayout) mainActivity.findViewById(R.id.registerContainer);
-            calc.setRegister(RegisterFragment.newInstance());
-
-//            ViewPager atomViewPager = mainActivity.findViewById(R.id.atomViewPager);
-//            calc.setTabs(AtomBackend.newInstance(atomViewPager));
-
             calc.hasNumberAtom = false;
             calc.parsedList = new ArrayList<>();
-
-            FragmentTransaction ft = calc.fm.beginTransaction();
-            Fragment cl = (Fragment) calc.cloud;
-            ft.add(cloudContainer.getId(), cl, "cloudLayout");
-            Fragment tb = (Fragment) calc.tabs;
-            ft.add(tabContainer.getId(), tb, "tabLayout");
-            Fragment rg = (Fragment) calc.register;
-            ft.add(registerContainer.getId(), rg, "registerLayout");
-            ft.commit();
-
-//            mainActivity.findViewById(R.id.mainLayout).setOnTouchListener(new OnSwipeTouchListener(mainActivity.getApplicationContext()){
-//                @Override
-//                public void onSwipeLeft() {
-//                    mainActivity.findViewById(R.id.registerContainer).setVisibility(View.GONE);
-//                }
-//                @Override
-//                public void onSwipeRight() {
-//                    mainActivity.findViewById(R.id.registerContainer).setVisibility(View.VISIBLE);
-//                }
-//            });
-
         }
         return calc;
     }
@@ -108,7 +90,6 @@ public class CalcBackend extends Fragment{
     //////////////////////
     // Processing Functions
     //////////////////////
-    //TODO: Refactor evaluateInput methods to work more generally
     public ArrayList<Symbol> parse(String s){
         parsedList = parser.input().parse(s);
         return parsedList;
@@ -152,18 +133,39 @@ public class CalcBackend extends Fragment{
     // Cloud Functions
     //////////////////////
     public void cloud(ArrayList<String> cloudList) {
-        for (String s: cloudList) {
-            cloud.addItem(s);
+        if(cloudList != null && cloudList.size() > 0) {
+            for (String s : cloudList) {
+                cloud.addItem(s);
+            }
         }
     }
 
     public void clearCloud() {
-        cloud.clear();
+            cloud.clear();
+    }
+
+    public void inputToCloud() {
+
+    }
+
+    public void outputToCloud() {
+        cloud(parser.atom().parse(output.getText().toString()).generateCloudItems());
+    }
+    public void inputTabsToCloud() {
+        if(tabs != null) {
+            cloud(tabs.generateCloudItems());
+        }
     }
 
     public void repopulateCloud() {
-        clearCloud();
-        cloud(tabs.getBackend().generateCloudItems());
+//        try {
+            clearCloud();
+//        inputTabsToCloud();
+            // TODO: Input Cloud
+            outputToCloud();
+//        } catch (NullPointerException e) {
+//            System.out.println("Exception while repopulating cloud: " + e.getMessage());
+//        }
     }
     public void testCloud() {
         ArrayList<String> cloudList = new ArrayList<>();
@@ -224,6 +226,13 @@ public class CalcBackend extends Fragment{
     //////////////////////
     // Getters and Setters
     //////////////////////
+    public RegisterBackend getRegister() {
+        return register;
+    }
+
+    public void setAtomBackend(AtomBackend atomBackend) {
+        this.tabs = atomBackend;
+    }
     public void setHasNumberAtom(boolean hasNumberAtom) {
         this.hasNumberAtom = hasNumberAtom;
     }
@@ -244,20 +253,19 @@ public class CalcBackend extends Fragment{
         this.output = output;
     }
 
-    private void setCloud(CloudFragment cloudFragment) {
-        this.cloud= cloudFragment;
-    }
-
-    private void setTabs(AtomFragment tabs) {
+    private void setTabs(AtomBackend tabs) {
         this.tabs = tabs;
-    }
-
-    private void setRegister(RegisterFragment register) {
-        this.register = register;
     }
 
     private void setFm(FragmentManager fm) {
         this.fm = fm;
     }
 
+    public void setCloud(CloudBackend cloudBackend) {
+        this.cloud = cloudBackend;
+    }
+
+    public void setRegister(RegisterBackend register) {
+        this.register = register;
+    }
 }

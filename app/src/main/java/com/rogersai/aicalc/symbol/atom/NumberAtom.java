@@ -1,5 +1,6 @@
 package com.rogersai.aicalc.symbol.atom;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class NumberAtom extends Atom{
@@ -15,6 +16,13 @@ public class NumberAtom extends Atom{
         super();
         type = "number";
         this.value = value;
+    }
+
+    @Override
+    public ArrayList<String> generateCloudItems(){
+        ArrayList<String> cloudItems = new ArrayList<>(1);
+        cloudItems.add(String.valueOf(value));
+        return cloudItems;
     }
 
     @Override

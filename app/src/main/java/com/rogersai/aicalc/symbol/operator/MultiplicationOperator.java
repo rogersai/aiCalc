@@ -1,6 +1,7 @@
 package com.rogersai.aicalc.symbol.operator;
 
 import com.rogersai.aicalc.symbol.Symbol;
+import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 public class MultiplicationOperator extends Operator {
@@ -12,13 +13,13 @@ public class MultiplicationOperator extends Operator {
     }
 
     @Override
-    public Symbol operate(Symbol pre, Symbol post) {
-        Symbol result = null;
+    public Atom operate(Atom pre, Atom post) {
+        Atom result = null;
         if (pre.getType().equals("number") || post.getType().equals("number")) {
             result =  operate(pre.toNumber(), post.toNumber());
         } else {
             System.out.println("Multiplication failed, falling back to blank result");
-            result =  new Symbol();
+            result =  new Atom();
         }
         return result;
     }

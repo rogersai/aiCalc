@@ -1,5 +1,7 @@
 package com.rogersai.aicalc.symbol.atom;
 
+import java.util.ArrayList;
+
 public class DateAtom extends Atom{
     private int day;
     private String month;
@@ -13,6 +15,12 @@ public class DateAtom extends Atom{
     @Override
     public NumberAtom toNumber() {
         //TODO: Implement toNumber
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> generateCloudItems(){
+        //TODO: Implement generateCloudItems
         return null;
     }
 
