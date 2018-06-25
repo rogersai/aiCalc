@@ -10,4 +10,7 @@ public class EvaluatorModule {
     @Provides @Singleton static InputEvaluator provideInputEvaluator() {
         return new InputEvaluator();
     }
+    @Provides @Singleton static Caster provideCaster() {
+        return new Caster();
+    }
 }

@@ -1,5 +1,6 @@
 package com.rogersai.aicalc;
 
+import com.rogersai.aicalc.backend.evaluator.Caster;
 import com.rogersai.aicalc.backend.evaluator.EvaluatorModule;
 import com.rogersai.aicalc.backend.evaluator.InputEvaluator;
 
@@ -11,4 +12,5 @@ import dagger.Component;
 @Component(modules = EvaluatorModule.class)
 public interface Evaluator {
     InputEvaluator input();
+    Caster caster();
 }

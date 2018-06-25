@@ -10,12 +10,14 @@ public class NumberAtom extends Atom{
         super();
         type = "number";
         this.value = (double) value;
+//        System.out.println("Value: " + value);
     }
 
     public NumberAtom(double value) {
         super();
         type = "number";
         this.value = value;
+//        System.out.println("Value: " + value);
     }
 
     @Override
@@ -35,7 +37,9 @@ public class NumberAtom extends Atom{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NumberAtom that = (NumberAtom) o;
-        return Double.compare(that.value, value) == 0;
+//        System.out.println("This: " + getValue());
+//        System.out.println("That: " + that.getValue());
+        return Double.compare(that.getValue(), getValue()) == 0;
     }
 
     @Override
