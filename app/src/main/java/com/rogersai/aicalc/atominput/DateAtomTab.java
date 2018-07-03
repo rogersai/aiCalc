@@ -3,15 +3,12 @@ package com.rogersai.aicalc.atominput;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -19,15 +16,8 @@ import com.rogersai.aicalc.AtomTab;
 import com.rogersai.aicalc.CloudGenerator;
 import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.backend.CalcBackend;
-import com.rogersai.aicalc.symbol.atom.DateAtom;
 
-import org.w3c.dom.Text;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateAtomTab extends AtomTab implements CloudGenerator{
@@ -158,12 +148,12 @@ public class DateAtomTab extends AtomTab implements CloudGenerator{
         });
     }
     @Override
-    public ArrayList<String> generateCloudItems() {
-        ArrayList<String> cloudList = new ArrayList<>();
-        cloudList.add("Date");
-        System.out.print(getSelectedSpinnerItem(dayList, dayPicker));
-        System.out.print(getSelectedSpinnerItem(monthList, monthPicker));
-        System.out.println(getSelectedSpinnerItem(yearList, yearPicker));
+    public ArrayList<Pair<String, String>> generateCloudItems() {
+        ArrayList<Pair<String, String>> cloudList = new ArrayList<>();
+        cloudList.add(new Pair("Date", "Date"));
+//        System.out.print(getSelectedSpinnerItem(dayList, dayPicker));
+//        System.out.print(getSelectedSpinnerItem(monthList, monthPicker));
+//        System.out.println(getSelectedSpinnerItem(yearList, yearPicker));
         return cloudList;
     }
 

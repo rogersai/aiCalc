@@ -2,12 +2,9 @@ package com.rogersai.aicalc.backend.evaluator;
 
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.Atom;
-import com.rogersai.aicalc.symbol.atom.NumberAtom;
-import com.rogersai.aicalc.symbol.grouper.Grouper;
 import com.rogersai.aicalc.symbol.grouper.LParenGrouper;
 import com.rogersai.aicalc.symbol.operator.Operator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class InputEvaluator {

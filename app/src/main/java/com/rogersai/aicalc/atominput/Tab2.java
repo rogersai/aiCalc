@@ -2,6 +2,7 @@ package com.rogersai.aicalc.atominput;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,9 @@ public class Tab2 extends Fragment implements CloudGenerator{
        return inflater.inflate(R.layout.tab2, container, false) ;
     }
     @Override
-    public ArrayList<String> generateCloudItems() {
-        ArrayList<String> cloudList = new ArrayList<>();
-        cloudList.add("Date");
+    public ArrayList<Pair<String, String>> generateCloudItems() {
+        ArrayList<Pair<String, String>> cloudList = new ArrayList<>();
+        cloudList.add(new Pair("Date", "Date"));
         return cloudList;
     }
 }

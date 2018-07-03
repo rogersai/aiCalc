@@ -1,23 +1,12 @@
 package com.rogersai.aicalc.cloud;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.rogersai.aicalc.CloudGenerator;
-import com.rogersai.aicalc.MainActivity;
-import com.rogersai.aicalc.R;
-import com.rogersai.aicalc.atominput.AtomFragment;
-import com.rogersai.aicalc.atominput.Pager;
-
-import java.util.ArrayList;
 
 public class CloudBackend extends Fragment {
     private static CloudBackend instance;
@@ -44,11 +33,11 @@ public class CloudBackend extends Fragment {
        return instance;
     }
 
-    public void addItem(String itemText) {
+    public void addItem(String itemText, String formulaText) {
         int itemID = 0;
 
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        Fragment cloudItem = CloudItem.newInstance(itemText);
+        Fragment cloudItem = CloudItem.newInstance(itemText, formulaText);
         if(cloudItem.getArguments() != null) {
             itemID = cloudItem.getArguments().getInt("itemID");
         }
@@ -66,7 +55,7 @@ public class CloudBackend extends Fragment {
         int itemID = 0;
         for (int i = 0; i <=20; i++) {
             tag = "tag" + i;
-            addItem(tag);
+            addItem(tag, "");
         }
     }
 

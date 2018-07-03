@@ -1,5 +1,7 @@
 package com.rogersai.aicalc.symbol.atom;
 
+import android.support.v4.util.Pair;
+
 import com.rogersai.aicalc.CloudGenerator;
 import com.rogersai.aicalc.symbol.Symbol;
 
@@ -11,13 +13,17 @@ public class Atom extends Symbol implements CloudGenerator{
         super();
         category = "atom";
     }
-    public NumberAtom toNumber() {
+
+    @Override
+    public ArrayList<Pair<String, String>> generateCloudItems() {
+        //TODO: Implement generateCloudItems
         return null;
     }
 
-    @Override
-    public ArrayList<String> generateCloudItems() {
-        //TODO: Implement generateCloudItems
+    public NumberAtom toNumber() {
+        return null;
+    }
+    public DateAtom toDate() {
         return null;
     }
 }

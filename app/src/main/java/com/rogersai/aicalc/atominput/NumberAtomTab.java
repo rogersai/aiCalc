@@ -1,6 +1,7 @@
 package com.rogersai.aicalc.atominput;
 
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import com.rogersai.aicalc.AtomTab;
 import com.rogersai.aicalc.CloudGenerator;
 import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.backend.CalcBackend;
-import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 import java.util.ArrayList;
 
@@ -145,10 +145,19 @@ public class NumberAtomTab extends AtomTab implements CloudGenerator{
     }
 
     @Override
-    public ArrayList<String> generateCloudItems() {
-        ArrayList<String> cloudList = new ArrayList<>();
-        cloudList.add("Number");
-        System.out.println("NUMBER");
+    public ArrayList<Pair<String, String>> generateCloudItems() {
+        ArrayList<Pair<String, String>> cloudList = new ArrayList<>();
+        cloudList.add(new Pair("+1", "+1"));
+        cloudList.add(new Pair("+5", "+5"));
+        cloudList.add(new Pair("+10", "+10"));
+        cloudList.add(new Pair("-1", "-1"));
+        cloudList.add(new Pair("-5", "-5"));
+        cloudList.add(new Pair("-10", "-10"));
+        cloudList.add(new Pair("x10", "x10"));
+        cloudList.add(new Pair("x100", "x100"));
+        cloudList.add(new Pair("/10", "/10"));
+        cloudList.add(new Pair("/100", "/100"));
+//        System.out.println("NUMBER");
         return cloudList;
     }
 }

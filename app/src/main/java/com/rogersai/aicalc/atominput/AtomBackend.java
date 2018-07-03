@@ -1,19 +1,10 @@
 package com.rogersai.aicalc.atominput;
 
-import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.rogersai.aicalc.CloudGenerator;
-import com.rogersai.aicalc.MainActivity;
-import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.backend.CalcBackend;
 
 import java.util.ArrayList;
@@ -42,8 +33,8 @@ public class AtomBackend extends TabLayout.ViewPagerOnTabSelectedListener implem
     }
 
     @Override
-    public ArrayList<String> generateCloudItems() {
-        ArrayList<String> cloudItems = new ArrayList<>();
+    public ArrayList<Pair<String, String>> generateCloudItems() {
+        ArrayList<Pair<String, String>> cloudItems = new ArrayList<>();
         if(atomViewPager != null) {
             cloudItems = ((CloudGenerator)((Pager)atomViewPager.getAdapter()).getItem(atomViewPager.getCurrentItem())).generateCloudItems();
         }

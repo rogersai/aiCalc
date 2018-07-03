@@ -1,11 +1,11 @@
 package com.rogersai.aicalc.backend;
 
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.Pair;
 import android.widget.TextView;
 
+import com.rogersai.aicalc.CalendarContentRetriever;
 import com.rogersai.aicalc.DaggerEvaluator;
 import com.rogersai.aicalc.DaggerParser;
 import com.rogersai.aicalc.Evaluator;
@@ -15,12 +15,9 @@ import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.atominput.AtomBackend;
 import com.rogersai.aicalc.atominput.AtomFragment;
 import com.rogersai.aicalc.cloud.CloudBackend;
-import com.rogersai.aicalc.cloud.CloudFragment;
 import com.rogersai.aicalc.register.RegisterBackend;
-import com.rogersai.aicalc.register.RegisterFragment;
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.Atom;
-import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 import java.util.ArrayList;
 
@@ -64,6 +61,9 @@ public class CalcBackend extends Fragment{
 
             calc.setFm(mainActivity.getSupportFragmentManager());
 
+            CalendarContentRetriever ccr = new CalendarContentRetriever(mainActivity);
+            ccr.testSelf();
+
 
             //calc.setAtomBackend(AtomBackend.newInstance(mainActivity));
 //            calc.setCloud(CloudBackend.newInstance());
@@ -95,9 +95,9 @@ public class CalcBackend extends Fragment{
         return parsedList;
     }
 
-    public Atom evaluate(String s) {
-        NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parse(s));
-        return n;
+    public Symbol evaluate(String s) {
+        Symbol result =  evaluator.input().evaluate(parser.input().parse(s));
+        return result;
     }
 
     //////////////////////
@@ -119,9 +119,9 @@ public class CalcBackend extends Fragment{
     }
 
     public void evaluateInput() {
-        NumberAtom n = (NumberAtom)evaluate(input.getText().toString());
+        Symbol s = evaluate(input.getText().toString());
         //NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parseInput(input.getText().toString()));
-        output.setText(Double.toString(n.getValue()));
+        output.setText(s.toString());
     }
 
     public void clear() {
@@ -132,10 +132,10 @@ public class CalcBackend extends Fragment{
     //////////////////////
     // Cloud Functions
     //////////////////////
-    public void cloud(ArrayList<String> cloudList) {
+    public void cloud(ArrayList<Pair<String, String>> cloudList) {
         if(cloudList != null && cloudList.size() > 0) {
-            for (String s : cloudList) {
-                cloud.addItem(s);
+            for (int i = 0; i < cloudList.size(); i++) {
+                cloud.addItem(cloudList.get(i).first, cloudList.get(i).second);
             }
         }
     }
@@ -168,11 +168,11 @@ public class CalcBackend extends Fragment{
 //        }
     }
     public void testCloud() {
-        ArrayList<String> cloudList = new ArrayList<>();
+        ArrayList<Pair<String, String>> cloudList = new ArrayList<>();
         String tag = "";
         for (int i = 0; i <=20; i++) {
             tag = "tag" + i;
-            cloudList.add(tag);
+            cloudList.add(new Pair(tag, tag));
         }
         cloud(cloudList);
     }

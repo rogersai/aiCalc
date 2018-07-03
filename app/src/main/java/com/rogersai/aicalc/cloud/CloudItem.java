@@ -11,7 +11,8 @@ import android.widget.TextView;
 import com.rogersai.aicalc.R;
 
 public class CloudItem extends Fragment {
-    private String itemText;
+    private String displayText;
+    private String formulaText;
     private int itemID;
     private static int nextID = 0;
 
@@ -19,10 +20,24 @@ public class CloudItem extends Fragment {
     private TextView inputView;
     private FragmentManager fragmentManager;
 
-    public static CloudItem newInstance(String text) {
+    public static CloudItem newInstance(String displayText, String formulaText) {
+        // TODO: Complete refactor for adding formulaText
         CloudItem item = new CloudItem();
         Bundle args = new Bundle();
-        args.putString("itemText", text);
+        args.putString("displayText", displayText);
+        args.putString("formulaText", formulaText);
+        args.putInt("itemID", nextID);
+        item.setArguments(args);
+        nextID++;
+        return item;
+    }
+
+    public static CloudItem newInstance(String displayText) {
+        // TODO: Complete refactor for adding formulaText
+        CloudItem item = new CloudItem();
+        Bundle args = new Bundle();
+        args.putString("displayText", displayText);
+        args.putString("formulaText", displayText);
         args.putInt("itemID", nextID);
         item.setArguments(args);
         nextID++;
@@ -37,16 +52,16 @@ public class CloudItem extends Fragment {
         inputView = (TextView) getActivity().findViewById(R.id.inputView);
 
         if(getArguments() != null) {
-            itemText = this.getArguments().getString("itemText");
+            displayText = this.getArguments().getString("displayText");
         }
 
-        textView.setText(itemText);
+        textView.setText(displayText);
 
         fragmentManager = getFragmentManager();
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+ getItemText());
+                inputView.setText(inputView.getText()+ getDisplayText());
             }
         });
         return view;
@@ -56,7 +71,7 @@ public class CloudItem extends Fragment {
         return itemID;
     }
 
-    public String getItemText() {
-        return itemText;
+    public String getDisplayText() {
+        return displayText;
     }
 }

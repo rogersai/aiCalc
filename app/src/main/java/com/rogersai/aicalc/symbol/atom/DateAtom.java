@@ -1,25 +1,38 @@
 package com.rogersai.aicalc.symbol.atom;
 
+import android.support.v4.util.Pair;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 
 public class DateAtom extends Atom{
     public static final String[] MONTHS = {"NON", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
-    private int day;
-    private int month;
-
-    private int year;
+    public static final DateTime EPOCH_OLD = new DateTime(0, DateTimeZone.UTC);
+    public static final DateTime EPOCH = new DateTime(0, DateTimeZone.UTC).withZoneRetainFields(DateTimeZone.getDefault()).withZone(DateTimeZone.UTC);
+    public static final DateTime EPOCH2_Daylight = new DateTime( 0 - DateTimeZone.getDefault().getOffset(new DateTime())).withZone(DateTimeZone.UTC);
+    public static final DateTimeFormatter formatter = DateTimeFormat.forPattern("ddMMMYYYY");
+    private DateTime date;
 
     public DateAtom(String date) {
         //TODO: Implement constructor
         super();
         type = "date";
+
     }
+
     public DateAtom(int day, int month, int year) {
         super();
         type = "date";
-        this.day = day;
-        this.month = month;
-        this.year = year;
+        this.date = new DateTime(year, month, day, 0, 0, 0).withZone(DateTimeZone.UTC);
+    }
+    public DateAtom(DateTime dt) {
+        super();
+        type = "date";
+        this.date = dt.withZone(DateTimeZone.UTC);
     }
 
     @Override
@@ -29,7 +42,7 @@ public class DateAtom extends Atom{
     }
 
     @Override
-    public ArrayList<String> generateCloudItems(){
+    public ArrayList<Pair<String, String>> generateCloudItems(){
         //TODO: Implement generateCloudItems
         return null;
     }
@@ -40,19 +53,13 @@ public class DateAtom extends Atom{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DateAtom that = (DateAtom) o;
-        boolean yearsMatch = Integer.compare(that.getYear(), getYear()) == 0;
-//        System.out.println("Years match: " + yearsMatch + ": " + that.getYear() + " " + getYear());
-        boolean monthsMatch = Integer.compare(that.getMonth(), getMonth()) == 0;
-//        System.out.println("Months match: " + monthsMatch);
-        boolean daysMatch = Integer.compare(that.getDay(), getDay()) == 0;
-//        System.out.println("Days match: " + daysMatch);
-        return yearsMatch && monthsMatch && daysMatch;
+        return this.getDate().getMillis() == ((DateAtom) o).getDate().getMillis();
     }
 
     @Override
     public String toString() {
         //TODO: Implement toString
-        return "";
+        return formatter.print(date.withZone(DateTimeZone.getDefault())).toUpperCase();
     }
 
     public double getValue() {
@@ -63,15 +70,24 @@ public class DateAtom extends Atom{
     // Getters and Setters
     ///////////////////////////////
     public int getDay() {
-        return day;
+        return date.getDayOfMonth();
     }
 
     public int getMonth() {
-        return month;
+        return date.getMonthOfYear();
     }
 
     public int getYear() {
-        return year;
+        return date.getYear();
+    }
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    @Override
+    public DateAtom toDate() {
+        return this;
     }
 
 }

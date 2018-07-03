@@ -1,7 +1,8 @@
 package com.rogersai.aicalc.symbol.atom;
 
+import android.support.v4.util.Pair;
+
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class NumberAtom extends Atom{
     private double value;
@@ -21,9 +22,9 @@ public class NumberAtom extends Atom{
     }
 
     @Override
-    public ArrayList<String> generateCloudItems(){
-        ArrayList<String> cloudItems = new ArrayList<>(1);
-        cloudItems.add(String.valueOf(value));
+    public ArrayList<Pair<String, String>> generateCloudItems(){
+        ArrayList<Pair<String, String>> cloudItems = new ArrayList<>(1);
+        cloudItems.add(new Pair(String.valueOf(value), String.valueOf(value)));
         return cloudItems;
     }
 
