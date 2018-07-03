@@ -12,6 +12,7 @@ import com.rogersai.aicalc.R;
 
 public class CloudItem extends Fragment {
     private String displayText;
+
     private String formulaText;
     private int itemID;
     private static int nextID = 0;
@@ -53,6 +54,7 @@ public class CloudItem extends Fragment {
 
         if(getArguments() != null) {
             displayText = this.getArguments().getString("displayText");
+            formulaText = this.getArguments().getString("formulaText");
         }
 
         textView.setText(displayText);
@@ -61,7 +63,7 @@ public class CloudItem extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+ getDisplayText());
+                inputView.setText(inputView.getText()+ getFormulaText());
             }
         });
         return view;
@@ -71,7 +73,8 @@ public class CloudItem extends Fragment {
         return itemID;
     }
 
-    public String getDisplayText() {
-        return displayText;
+    public String getFormulaText() {
+        return formulaText;
     }
+
 }

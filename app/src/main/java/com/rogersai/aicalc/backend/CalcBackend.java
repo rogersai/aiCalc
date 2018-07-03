@@ -6,6 +6,7 @@ import android.support.v4.util.Pair;
 import android.widget.TextView;
 
 import com.rogersai.aicalc.CalendarContentRetriever;
+import com.rogersai.aicalc.ContactContentRetriever;
 import com.rogersai.aicalc.DaggerEvaluator;
 import com.rogersai.aicalc.DaggerParser;
 import com.rogersai.aicalc.Evaluator;
@@ -29,6 +30,10 @@ public class CalcBackend extends Fragment{
 
 
     private FragmentManager fm;
+
+
+    private CalendarContentRetriever calendarCR;
+    private ContactContentRetriever contactCR;
 
     private AtomBackend tabs;
     private CloudBackend cloud;
@@ -61,9 +66,9 @@ public class CalcBackend extends Fragment{
 
             calc.setFm(mainActivity.getSupportFragmentManager());
 
-            CalendarContentRetriever ccr = new CalendarContentRetriever(mainActivity);
-            ccr.testSelf();
-
+            calc.setCalendarCR(new CalendarContentRetriever(mainActivity));
+            calc.setContactCR(new ContactContentRetriever(mainActivity));
+            calc.getContactCR().testSelf();
 
             //calc.setAtomBackend(AtomBackend.newInstance(mainActivity));
 //            calc.setCloud(CloudBackend.newInstance());
@@ -267,5 +272,20 @@ public class CalcBackend extends Fragment{
 
     public void setRegister(RegisterBackend register) {
         this.register = register;
+    }
+    public CalendarContentRetriever getCalendarCR() {
+        return calendarCR;
+    }
+
+    public void setCalendarCR(CalendarContentRetriever calendarCR) {
+        this.calendarCR = calendarCR;
+    }
+
+    public ContactContentRetriever getContactCR() {
+        return contactCR;
+    }
+
+    public void setContactCR(ContactContentRetriever contactCR) {
+        this.contactCR = contactCR;
     }
 }

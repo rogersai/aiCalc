@@ -13,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.rogersai.aicalc.AtomTab;
+import com.rogersai.aicalc.CalendarContentRetriever;
 import com.rogersai.aicalc.CloudGenerator;
 import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.backend.CalcBackend;
@@ -149,8 +150,9 @@ public class DateAtomTab extends AtomTab implements CloudGenerator{
     }
     @Override
     public ArrayList<Pair<String, String>> generateCloudItems() {
-        ArrayList<Pair<String, String>> cloudList = new ArrayList<>();
-        cloudList.add(new Pair("Date", "Date"));
+        CalendarContentRetriever ccr = calc.getCalendarCR();
+        ArrayList<Pair<String, String>> cloudList = ccr.getHolidays();
+        cloudList.add(0, new Pair("Date", "Date"));
 //        System.out.print(getSelectedSpinnerItem(dayList, dayPicker));
 //        System.out.print(getSelectedSpinnerItem(monthList, monthPicker));
 //        System.out.println(getSelectedSpinnerItem(yearList, yearPicker));
