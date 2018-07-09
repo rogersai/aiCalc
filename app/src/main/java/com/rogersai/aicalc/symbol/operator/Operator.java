@@ -3,6 +3,7 @@ package com.rogersai.aicalc.symbol.operator;
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.DateAtom;
+import com.rogersai.aicalc.symbol.atom.MeasurementAtom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 public class Operator extends Symbol {
@@ -38,5 +39,10 @@ public class Operator extends Symbol {
     public DateAtom operate(DateAtom pre, DateAtom post) {
         System.out.println("Operated in superclass");
         return new DateAtom(0,0,0);
+    }
+
+    public MeasurementAtom operate(MeasurementAtom pre, MeasurementAtom post) {
+        System.out.println("Operated in superclass");
+        return new MeasurementAtom(0,"");
     }
 }

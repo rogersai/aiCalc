@@ -34,6 +34,7 @@ public class CloudBackend extends Fragment {
     }
 
     public void addItem(String itemText, String formulaText) {
+        // TODO: Implement color coding of items
         int itemID = 0;
 
         FragmentTransaction fragmentTransaction = fm.beginTransaction();

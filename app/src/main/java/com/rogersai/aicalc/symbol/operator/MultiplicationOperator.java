@@ -3,6 +3,7 @@ package com.rogersai.aicalc.symbol.operator;
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.atom.DateAtom;
+import com.rogersai.aicalc.symbol.atom.MeasurementAtom;
 import com.rogersai.aicalc.symbol.atom.NumberAtom;
 
 import org.joda.time.DateTime;
@@ -46,6 +47,13 @@ public class MultiplicationOperator extends Operator {
         System.out.println("Added: " + result.toString());
 //        DateTime result = new DateTime(pre.getDate().getMillis() + post.getDate().getMillis(), DateTimeZone.UTC);
         return new DateAtom(result);
+    }
+    @Override
+    public MeasurementAtom operate(MeasurementAtom pre, MeasurementAtom post) {
+        // TODO: Fix implementation for different units
+        double resultValue = pre.getValue() + post.getValue();
+        String resultUnit = pre.getUnit();
+        return new MeasurementAtom(resultValue, resultUnit);
     }
 
     @Override

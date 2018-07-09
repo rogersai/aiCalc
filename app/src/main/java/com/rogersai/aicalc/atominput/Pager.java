@@ -20,7 +20,7 @@ public class Pager extends FragmentStatePagerAdapter {
             case 1:
                 return DateAtomTab.getInstance();
             case 2:
-                return new Tab3();
+                return MeasurementAtomTab.getInstance();
             default:
                 return null;
         }
@@ -34,7 +34,7 @@ public class Pager extends FragmentStatePagerAdapter {
             case 1:
                 return "Date";
             case 2:
-                return "Dice";
+                return "Measure";
             default:
                 return null;
         }

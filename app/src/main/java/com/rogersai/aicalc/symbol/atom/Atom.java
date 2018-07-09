@@ -14,7 +14,6 @@ public class Atom extends Symbol implements CloudGenerator{
         category = "atom";
     }
 
-    @Override
     public ArrayList<Pair<String, String>> generateCloudItems() {
         //TODO: Implement generateCloudItems
         return null;
@@ -26,5 +25,8 @@ public class Atom extends Symbol implements CloudGenerator{
     public DateAtom toDate() {
         return null;
     }
+    public MeasurementAtom toMeasurement() {
+        return null;
+    };
 }
 

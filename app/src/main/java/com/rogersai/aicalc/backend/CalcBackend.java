@@ -48,6 +48,9 @@ public class CalcBackend extends Fragment{
     private TextView output;
     private Atom outputAtom;
 
+    private String currentInput = "";
+    private String queuedInput = "";
+
     //private CloudFragment cloud;
     //private AtomFragment tabs;
 
@@ -68,7 +71,7 @@ public class CalcBackend extends Fragment{
 
             calc.setCalendarCR(new CalendarContentRetriever(mainActivity));
             calc.setContactCR(new ContactContentRetriever(mainActivity));
-            calc.getContactCR().testSelf();
+            //calc.getContactCR().testSelf();
 
             //calc.setAtomBackend(AtomBackend.newInstance(mainActivity));
 //            calc.setCloud(CloudBackend.newInstance());
@@ -101,7 +104,7 @@ public class CalcBackend extends Fragment{
     }
 
     public Symbol evaluate(String s) {
-        Symbol result =  evaluator.input().evaluate(parser.input().parse(s));
+        Symbol result =  evaluator.input().evaluate(parse(s));
         return result;
     }
 
@@ -109,6 +112,11 @@ public class CalcBackend extends Fragment{
     // Display Functions
     //////////////////////
     public void input(String s) {
+        if (!queuedInput.equals("")) {
+            input.setText(currentInput + queuedInput);
+        }
+        currentInput = "";
+        queuedInput = "";
         if(!input.getText().equals("") && operators.contains(s) && getLastCategory().equals("operator")) {
             input.setText(input.getText().subSequence(0, input.getText().length() - 1));
         }
@@ -116,6 +124,29 @@ public class CalcBackend extends Fragment{
         parseInput();
         if(getLastCategory().equals("atom")){
             evaluateInput();
+        }
+    }
+    public void queue(String s) {
+        if (queuedInput.equals("")) {
+            String inputText = input.getText().toString();
+            if (!inputText.equals("null")) {
+                currentInput = inputText;
+            } else {
+                currentInput = "";
+            }
+        }
+        queuedInput = s;
+        input.setText(currentInput + queuedInput);
+        parseInput();
+        if(getLastCategory().equals("atom")){
+            evaluateInput();
+        }
+    }
+    public boolean hasQueue() {
+        if (!queuedInput.equals("")) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -131,6 +162,9 @@ public class CalcBackend extends Fragment{
 
     public void clear() {
         input.setText("");
+        parsedList.clear();
+        currentInput = "";
+        queuedInput = "";
         clearSymbols();
     }
 

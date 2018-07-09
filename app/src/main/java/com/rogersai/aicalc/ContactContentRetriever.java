@@ -13,21 +13,24 @@ import java.util.ArrayList;
 
 public class ContactContentRetriever {
     private static final String[] CONTACTS_PROJECTION = new String[]{
-            ContactsContract.Contacts._ID, // 0
-            ContactsContract.Contacts.DISPLAY_NAME, // 1
+            ContactsContract.Contacts.Entity.RAW_CONTACT_ID, // 0
+            ContactsContract.Contacts.Entity.DATA1,          // 1
+            ContactsContract.Contacts.Entity.MIMETYPE,       // 2
     };
-    private static final int CONTACTS_PROJECTION_ID_INDEX = 0;
-    private static final int CONTACTS_PROJECTION_DISPLAY_NAME_INDEX = 1;
+    private static final int CONTACTS_PROJECTION_RAW_CONTACT_ID_INDEX = 0;
+    private static final int CONTACTS_PROJECTION_DATA1_INDEX = 1;
+    private static final int CONTACTS_PROJECTION_MIMETYPE_INDEX = 1;
 
-    private static final String[] RAW_CONTACT_PROJECTION = new String[]{
-            ContactsContract.Profile._ID, // 0
-            ContactsContract.Profile.DISPLAY_NAME, // 1
-    };
-
-    private static final String[] CONTACT_DATA_PROJECTION = new String[]{
-            ContactsContract.Profile._ID, // 0
-            ContactsContract.Profile.DISPLAY_NAME, // 1
-    };
+    private static final String CONTACTS_SORT_ORDER = ContactsContract.Contacts.Entity.RAW_CONTACT_ID + " ASC";
+//    private static final String[] RAW_CONTACT_PROJECTION = new String[]{
+//            ContactsContract.Profile._ID, // 0
+//            ContactsContract.Profile.DISPLAY_NAME, // 1
+//    };
+//
+//    private static final String[] CONTACT_DATA_PROJECTION = new String[]{
+//            ContactsContract.Profile._ID, // 0
+//            ContactsContract.Profile.DISPLAY_NAME, // 1
+//    };
 
     private MainActivity mainActivity;
     private ContentResolver cr;
@@ -50,16 +53,18 @@ public class ContactContentRetriever {
         }
         System.out.println(">>> Getting contacts");
         Cursor contactsCursor = null;
-        Uri contactsUri = ContactsContract.Contacts.CONTENT_URI;
-        contactsCursor = cr.query(contactsUri, CONTACTS_PROJECTION, null, null, null);
+        Uri contactsUri = Uri.parse(ContactsContract.Contacts.Entity.CONTENT_DIRECTORY);
+        contactsCursor = cr.query(contactsUri, CONTACTS_PROJECTION, null, null, CONTACTS_SORT_ORDER);
         while (contactsCursor.moveToNext()) {
-            long contactID = 0;
-            String contactName = null;
+            long rawContactID = 0;
+            String data1 = null;
+            String mimeType = null;
 
-            contactID = contactsCursor.getLong(CONTACTS_PROJECTION_ID_INDEX);
-            contactName = contactsCursor.getString(CONTACTS_PROJECTION_DISPLAY_NAME_INDEX);
+            rawContactID = contactsCursor.getLong(CONTACTS_PROJECTION_RAW_CONTACT_ID_INDEX);
+            data1 = contactsCursor.getString(CONTACTS_PROJECTION_DATA1_INDEX);
+            mimeType = contactsCursor.getString(CONTACTS_PROJECTION_MIMETYPE_INDEX);
 
-            System.out.println(contactID + " " + contactName);
+            System.out.println(rawContactID + " " + mimeType + " " + data1);
         }
     }
     public Cursor getRawContactCursor() {
