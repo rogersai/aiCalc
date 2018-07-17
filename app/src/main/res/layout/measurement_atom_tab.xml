@@ -202,7 +202,7 @@
 
     </TableLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:id="@+id/typeContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -211,5 +211,5 @@
         app:layout_constraintStart_toEndOf="@+id/typePad"
         app:layout_constraintTop_toTopOf="parent">
 
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

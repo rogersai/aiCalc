@@ -16,8 +16,8 @@ import com.rogersai.aicalc.cloud.CloudView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MassTypeFragment extends Fragment implements UnitLister {
-    private static final String[] BASIC_MASS_UNITS = {"kg", "g", "oz", "lb"};
+public class LengthTypeFragment extends Fragment implements UnitLister {
+    private static final String[] BASIC_MASS_UNITS = {"km", "g", "oz", "lb"};
     private static final Map<String, String[]> MASS_SUPERUNITS= new HashMap<String, String[]>();
     private static final Map<String, String[]> MASS_SUBUNITS= new HashMap<String, String[]>();
 //    private static final String[] BASIC_VOLUME_UNITS = {"L", "mL", "cp", "gal"};
@@ -43,11 +43,10 @@ public class MassTypeFragment extends Fragment implements UnitLister {
         MASS_SUPERUNITS.put("lb", new String[]{"kg", "ton"});
         MASS_SUBUNITS.put("lb", new String[]{"oz", "g"});
     }
-    private static MassTypeFragment instance;
+    private static LengthTypeFragment instance;
     private FragmentManager fm;
     private CloudView superUnitView, subUnitView;
     private LinearLayout baseUnitView;
-    private ConstraintLayout typeContainer;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.mass_type_view, container, false);
@@ -58,7 +57,7 @@ public class MassTypeFragment extends Fragment implements UnitLister {
         subUnitView = view.findViewById(R.id.subUnitView);
 
         initialize();
-        view.setVisibility(View.INVISIBLE);
+//        view.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -89,9 +88,9 @@ public class MassTypeFragment extends Fragment implements UnitLister {
         System.out.println("Unit Listing Test");
     }
 
-    public static MassTypeFragment getInstance() {
+    public static LengthTypeFragment getInstance() {
         if(instance == null){
-            instance = new MassTypeFragment();
+            instance = new LengthTypeFragment();
         }
         return instance;
     }

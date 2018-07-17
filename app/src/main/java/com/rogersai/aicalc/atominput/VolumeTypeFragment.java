@@ -16,8 +16,8 @@ import com.rogersai.aicalc.cloud.CloudView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MassTypeFragment extends Fragment implements UnitLister {
-    private static final String[] BASIC_MASS_UNITS = {"kg", "g", "oz", "lb"};
+public class VolumeTypeFragment extends Fragment implements UnitLister {
+    private static final String[] BASIC_MASS_UNITS = {"kL", "g", "oz", "lb"};
     private static final Map<String, String[]> MASS_SUPERUNITS= new HashMap<String, String[]>();
     private static final Map<String, String[]> MASS_SUBUNITS= new HashMap<String, String[]>();
 //    private static final String[] BASIC_VOLUME_UNITS = {"L", "mL", "cp", "gal"};
@@ -43,7 +43,7 @@ public class MassTypeFragment extends Fragment implements UnitLister {
         MASS_SUPERUNITS.put("lb", new String[]{"kg", "ton"});
         MASS_SUBUNITS.put("lb", new String[]{"oz", "g"});
     }
-    private static MassTypeFragment instance;
+    private static VolumeTypeFragment instance;
     private FragmentManager fm;
     private CloudView superUnitView, subUnitView;
     private LinearLayout baseUnitView;
@@ -58,7 +58,7 @@ public class MassTypeFragment extends Fragment implements UnitLister {
         subUnitView = view.findViewById(R.id.subUnitView);
 
         initialize();
-        view.setVisibility(View.INVISIBLE);
+//        view.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -89,9 +89,9 @@ public class MassTypeFragment extends Fragment implements UnitLister {
         System.out.println("Unit Listing Test");
     }
 
-    public static MassTypeFragment getInstance() {
+    public static VolumeTypeFragment getInstance() {
         if(instance == null){
-            instance = new MassTypeFragment();
+            instance = new VolumeTypeFragment();
         }
         return instance;
     }

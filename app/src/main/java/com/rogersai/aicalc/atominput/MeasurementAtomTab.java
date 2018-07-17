@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.rogersai.aicalc.AtomTab;
@@ -17,7 +18,8 @@ import com.rogersai.aicalc.backend.CalcBackend;
 
 public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
     private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
-    private ConstraintLayout typeContainer;
+    private Button buttonMass, buttonVolume, buttonLength;
+    private FrameLayout typeContainer;
 
 
     private CalcBackend calc;
@@ -26,6 +28,9 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
     private String currentValueString = "";
     private View currentUnitView;
 
+    private MassTypeFragment mtf;
+    private VolumeTypeFragment vtf;
+    private LengthTypeFragment ltf;
 
     private static MeasurementAtomTab instance;
 
@@ -50,16 +55,25 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
         button8 = view.findViewById(R.id.button8);
         button9 = view.findViewById(R.id.button9);
 
+        buttonMass = view.findViewById(R.id.buttonMass);
+        buttonVolume = view.findViewById(R.id.buttonVolume);
+        buttonLength = view.findViewById(R.id.buttonLength);
+
         typeContainer = view.findViewById(R.id.typeContainer);
 
         calc = CalcBackend.getInstance();
         fm = getActivity().getSupportFragmentManager();
 
-        MassTypeFragment mtf = MassTypeFragment.getInstance();
+        mtf = MassTypeFragment.getInstance();
+        vtf = VolumeTypeFragment.getInstance();
+        ltf = LengthTypeFragment.getInstance();
 
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(typeContainer.getId(), mtf, "massTypeLayout");
+//        ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
+//        ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
         ft.commit();
+
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +175,36 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
                 currentValueString = currentValueString + "0";
                 queueCurrentMeasurement();
                 //inputView.setText(inputView.getText()+"0");
+            }
+        });
+        buttonMass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.remove(vtf);
+                ft.remove(ltf);
+                ft.add(typeContainer.getId(), mtf, "massTypeLayout");
+                ft.commit();
+            }
+        });
+        buttonVolume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.remove(mtf);
+                ft.remove(ltf);
+                ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
+                ft.commit();
+            }
+        });
+        buttonLength.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.remove(mtf);
+                ft.remove(vtf);
+                ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
+                ft.commit();
             }
         });
         return view;
