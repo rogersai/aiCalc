@@ -16,32 +16,31 @@ import com.rogersai.aicalc.cloud.CloudView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VolumeTypeFragment extends Fragment implements UnitLister {
+public class VolumeTypeFragment extends Fragment implements UnitLister , TypeFragment{
     private static final String[] BASIC_MASS_UNITS = {"kL", "g", "oz", "lb"};
-    private static final Map<String, String[]> MASS_SUPERUNITS= new HashMap<String, String[]>();
-    private static final Map<String, String[]> MASS_SUBUNITS= new HashMap<String, String[]>();
-//    private static final String[] BASIC_VOLUME_UNITS = {"L", "mL", "cp", "gal"};
+    private static final Map<String, String[]> VOLUME_SUPERUNITS = new HashMap<String, String[]>();
+    private static final Map<String, String[]> VOLUME_SUBUNITS = new HashMap<String, String[]>();
+    private static final String[] BASIC_VOLUME_UNITS = {"L", "mL", "cp", "gal"};
 //    private static final String[] BASIC_LENGTH_UNITS = {"m", "cm", "mm", "in", "ft", "mi"};
 //    private static final String[] METRIC_PREFIXES = {"p", "n", "u", "m", "c", "d", "da", "h", "k", "M", "G", "T"};
 
     private String currentValue;
+    private View currentUnitView;
 //    private View currentUnitView;
     private View view;
 
     static {
-        MASS_SUPERUNITS.put("kg", new String[]{"Mg", "Gg", "Tg"});
-        MASS_SUBUNITS.put("kg", new String[]{"g", "mg", "lb", "oz"});
+        VOLUME_SUPERUNITS.put("L", new String[]{"kL", "ML", "GL", "TL"});
+        VOLUME_SUBUNITS.put("L", new String[]{"cL", "qt", "cp", "mL", "uL"});
 
+        VOLUME_SUPERUNITS.put("mL", new String[]{"L", "oz", "cp"});
+        VOLUME_SUBUNITS.put("mL", new String[]{"uL", "nL"});
 
-        MASS_SUPERUNITS.put("g", new String[]{"kg", "lb", "oz"});
-        MASS_SUBUNITS.put("g", new String[]{"cg","mg"});
+        VOLUME_SUPERUNITS.put("cp", new String[]{"pt", "qt", "gal", "L"});
+        VOLUME_SUBUNITS.put("cp", new String[]{"Ts", "ts", "oz", "mL"});
 
-
-        MASS_SUPERUNITS.put("oz", new String[]{"lb", "kg"});
-        MASS_SUBUNITS.put("oz", new String[]{"g", "mg"});
-
-        MASS_SUPERUNITS.put("lb", new String[]{"kg", "ton"});
-        MASS_SUBUNITS.put("lb", new String[]{"oz", "g"});
+        VOLUME_SUPERUNITS.put("gal", new String[]{});
+        VOLUME_SUBUNITS.put("gal", new String[]{"L", "qt", "pt", "cp", "oz"});
     }
     private static VolumeTypeFragment instance;
     private FragmentManager fm;
@@ -50,15 +49,15 @@ public class VolumeTypeFragment extends Fragment implements UnitLister {
     private ConstraintLayout typeContainer;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.mass_type_view, container, false);
+        view = inflater.inflate(R.layout.volume_type_view, container, false);
         fm = getActivity().getSupportFragmentManager();
 
-        superUnitView = view.findViewById(R.id.superUnitView);
-        baseUnitView = view.findViewById(R.id.baseUnitView);
-        subUnitView = view.findViewById(R.id.subUnitView);
+        superUnitView = view.findViewById(R.id.volumeSuperUnitView);
+        baseUnitView = view.findViewById(R.id.volumeBaseUnitView);
+        subUnitView = view.findViewById(R.id.volumeSubUnitView);
 
         initialize();
-//        view.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -66,7 +65,7 @@ public class VolumeTypeFragment extends Fragment implements UnitLister {
     public void initialize() {
         FragmentTransaction ft = fm.beginTransaction();
         BasicUnitItem item = null;
-        for (String unit : BASIC_MASS_UNITS) {
+        for (String unit : BASIC_VOLUME_UNITS) {
             item = BasicUnitItem.newInstance(unit, this);
             ft.add(baseUnitView.getId(), item, unit + "Item");
         }
@@ -77,11 +76,11 @@ public class VolumeTypeFragment extends Fragment implements UnitLister {
         superUnitView.removeAllViewsInLayout();
         subUnitView.removeAllViewsInLayout();
         FragmentTransaction ft = fm.beginTransaction();
-        for (String superUnit : MASS_SUPERUNITS.get(baseUnit)){
+        for (String superUnit : VOLUME_SUPERUNITS.get(baseUnit)){
             SubSuperUnitItem item = SubSuperUnitItem.newInstance(superUnit);
             ft.add(superUnitView.getId(), item, superUnit + "SuperItem");
         }
-        for (String subUnit : MASS_SUBUNITS.get(baseUnit)){
+        for (String subUnit : VOLUME_SUBUNITS.get(baseUnit)){
             SubSuperUnitItem item = SubSuperUnitItem.newInstance(subUnit);
             ft.add(subUnitView.getId(), item, subUnit + "SubItem");
         }
@@ -106,5 +105,13 @@ public class VolumeTypeFragment extends Fragment implements UnitLister {
 
     public View getView() {
         return view;
+    }
+
+    public View getCurrentUnitView() {
+        return currentUnitView;
+    }
+
+    public void setCurrentUnitView(View currentUnitView) {
+        this.currentUnitView = currentUnitView;
     }
 }

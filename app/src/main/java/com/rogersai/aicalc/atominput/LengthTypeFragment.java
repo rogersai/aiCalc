@@ -1,7 +1,6 @@
 package com.rogersai.aicalc.atominput;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,32 +15,33 @@ import com.rogersai.aicalc.cloud.CloudView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LengthTypeFragment extends Fragment implements UnitLister {
-    private static final String[] BASIC_MASS_UNITS = {"km", "g", "oz", "lb"};
-    private static final Map<String, String[]> MASS_SUPERUNITS= new HashMap<String, String[]>();
-    private static final Map<String, String[]> MASS_SUBUNITS= new HashMap<String, String[]>();
+public class LengthTypeFragment extends Fragment implements UnitLister , TypeFragment{
+    private static final String[] BASIC_LENGTH_UNITS = {"km", "m", "cm", "ft", "in"};
+    private static final Map<String, String[]> LENGTH_SUPERUNITS = new HashMap<String, String[]>();
+    private static final Map<String, String[]> LENGTH_SUBUNITS = new HashMap<String, String[]>();
 //    private static final String[] BASIC_VOLUME_UNITS = {"L", "mL", "cp", "gal"};
 //    private static final String[] BASIC_LENGTH_UNITS = {"m", "cm", "mm", "in", "ft", "mi"};
 //    private static final String[] METRIC_PREFIXES = {"p", "n", "u", "m", "c", "d", "da", "h", "k", "M", "G", "T"};
 
     private String currentValue;
-//    private View currentUnitView;
+    private View currentUnitView;
     private View view;
 
     static {
-        MASS_SUPERUNITS.put("kg", new String[]{"Mg", "Gg", "Tg"});
-        MASS_SUBUNITS.put("kg", new String[]{"g", "mg", "lb", "oz"});
+        LENGTH_SUPERUNITS.put("km", new String[]{"mi", "Mm"});
+        LENGTH_SUBUNITS.put("km", new String[]{"m", "cm", "yd", "ft", "in"});
 
+        LENGTH_SUPERUNITS.put("m", new String[]{"km", "mi"});
+        LENGTH_SUBUNITS.put("m", new String[]{"cm", "mm", "um"});
 
-        MASS_SUPERUNITS.put("g", new String[]{"kg", "lb", "oz"});
-        MASS_SUBUNITS.put("g", new String[]{"cg","mg"});
+        LENGTH_SUPERUNITS.put("cm", new String[]{"m", "in", "ft"});
+        LENGTH_SUBUNITS.put("cm", new String[]{"mm", "um", "nm", "pm"});
 
+        LENGTH_SUPERUNITS.put("ft", new String[]{"yd", "mi", "m", "km"});
+        LENGTH_SUBUNITS.put("ft", new String[]{"in", "cm", "mm"});
 
-        MASS_SUPERUNITS.put("oz", new String[]{"lb", "kg"});
-        MASS_SUBUNITS.put("oz", new String[]{"g", "mg"});
-
-        MASS_SUPERUNITS.put("lb", new String[]{"kg", "ton"});
-        MASS_SUBUNITS.put("lb", new String[]{"oz", "g"});
+        LENGTH_SUPERUNITS.put("in", new String[]{"ft", "mi", "m", "km"});
+        LENGTH_SUBUNITS.put("in", new String[]{"cm", "mm"});
     }
     private static LengthTypeFragment instance;
     private FragmentManager fm;
@@ -49,15 +49,15 @@ public class LengthTypeFragment extends Fragment implements UnitLister {
     private LinearLayout baseUnitView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.mass_type_view, container, false);
+        view = inflater.inflate(R.layout.length_type_view, container, false);
         fm = getActivity().getSupportFragmentManager();
 
-        superUnitView = view.findViewById(R.id.superUnitView);
-        baseUnitView = view.findViewById(R.id.baseUnitView);
-        subUnitView = view.findViewById(R.id.subUnitView);
+        superUnitView = view.findViewById(R.id.lengthSuperUnitView);
+        baseUnitView = view.findViewById(R.id.lengthBaseUnitView);
+        subUnitView = view.findViewById(R.id.lengthSubUnitView);
 
         initialize();
-//        view.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -65,7 +65,7 @@ public class LengthTypeFragment extends Fragment implements UnitLister {
     public void initialize() {
         FragmentTransaction ft = fm.beginTransaction();
         BasicUnitItem item = null;
-        for (String unit : BASIC_MASS_UNITS) {
+        for (String unit : BASIC_LENGTH_UNITS) {
             item = BasicUnitItem.newInstance(unit, this);
             ft.add(baseUnitView.getId(), item, unit + "Item");
         }
@@ -76,11 +76,11 @@ public class LengthTypeFragment extends Fragment implements UnitLister {
         superUnitView.removeAllViewsInLayout();
         subUnitView.removeAllViewsInLayout();
         FragmentTransaction ft = fm.beginTransaction();
-        for (String superUnit : MASS_SUPERUNITS.get(baseUnit)){
+        for (String superUnit : LENGTH_SUPERUNITS.get(baseUnit)){
             SubSuperUnitItem item = SubSuperUnitItem.newInstance(superUnit);
             ft.add(superUnitView.getId(), item, superUnit + "SuperItem");
         }
-        for (String subUnit : MASS_SUBUNITS.get(baseUnit)){
+        for (String subUnit : LENGTH_SUBUNITS.get(baseUnit)){
             SubSuperUnitItem item = SubSuperUnitItem.newInstance(subUnit);
             ft.add(subUnitView.getId(), item, subUnit + "SubItem");
         }
@@ -105,5 +105,13 @@ public class LengthTypeFragment extends Fragment implements UnitLister {
 
     public View getView() {
         return view;
+    }
+
+    public View getCurrentUnitView() {
+        return currentUnitView;
+    }
+
+    public void setCurrentUnitView(View currentUnitView) {
+        this.currentUnitView = currentUnitView;
     }
 }

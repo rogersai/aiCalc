@@ -16,7 +16,7 @@ import com.rogersai.aicalc.cloud.CloudView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MassTypeFragment extends Fragment implements UnitLister {
+public class MassTypeFragment extends Fragment implements UnitLister, TypeFragment{
     private static final String[] BASIC_MASS_UNITS = {"kg", "g", "oz", "lb"};
     private static final Map<String, String[]> MASS_SUPERUNITS= new HashMap<String, String[]>();
     private static final Map<String, String[]> MASS_SUBUNITS= new HashMap<String, String[]>();
@@ -25,7 +25,7 @@ public class MassTypeFragment extends Fragment implements UnitLister {
 //    private static final String[] METRIC_PREFIXES = {"p", "n", "u", "m", "c", "d", "da", "h", "k", "M", "G", "T"};
 
     private String currentValue;
-//    private View currentUnitView;
+    private View currentUnitView;
     private View view;
 
     static {
@@ -53,12 +53,12 @@ public class MassTypeFragment extends Fragment implements UnitLister {
         view = inflater.inflate(R.layout.mass_type_view, container, false);
         fm = getActivity().getSupportFragmentManager();
 
-        superUnitView = view.findViewById(R.id.superUnitView);
-        baseUnitView = view.findViewById(R.id.baseUnitView);
-        subUnitView = view.findViewById(R.id.subUnitView);
+        superUnitView = view.findViewById(R.id.massSuperUnitView);
+        baseUnitView = view.findViewById(R.id.massBaseUnitView);
+        subUnitView = view.findViewById(R.id.massSubUnitView);
 
         initialize();
-        view.setVisibility(View.INVISIBLE);
+//        view.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -106,5 +106,15 @@ public class MassTypeFragment extends Fragment implements UnitLister {
 
     public View getView() {
         return view;
+    }
+
+    @Override
+    public View getCurrentUnitView() {
+        return currentUnitView;
+    }
+
+    @Override
+    public void setCurrentUnitView(View currentUnitView) {
+        this.currentUnitView = currentUnitView;
     }
 }

@@ -2,6 +2,7 @@ package com.rogersai.aicalc.atominput;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -26,11 +27,12 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
     private FragmentManager fm;
 
     private String currentValueString = "";
-    private View currentUnitView;
+    private TypeFragment currentTypeFragment;
 
     private MassTypeFragment mtf;
     private VolumeTypeFragment vtf;
     private LengthTypeFragment ltf;
+    private String selectedType = "";
 
     private static MeasurementAtomTab instance;
 
@@ -67,12 +69,15 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
         mtf = MassTypeFragment.getInstance();
         vtf = VolumeTypeFragment.getInstance();
         ltf = LengthTypeFragment.getInstance();
+        setCurrentTypeFragment(mtf);
 
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(typeContainer.getId(), mtf, "massTypeLayout");
-//        ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
-//        ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
+        ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
+        ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
         ft.commit();
+        System.out.println("SETTING SELECTED TYPE TO MASS");
+        selectedType = "mass";
 
 
         button1.setOnClickListener(new View.OnClickListener() {
@@ -180,42 +185,47 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
         buttonMass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.remove(vtf);
-                ft.remove(ltf);
-                ft.add(typeContainer.getId(), mtf, "massTypeLayout");
-                ft.commit();
+                setCurrentTypeFragment(mtf);
+
+                mtf.getView().setVisibility(View.VISIBLE);
+                vtf.getView().setVisibility(View.INVISIBLE);
+                ltf.getView().setVisibility(View.INVISIBLE);
+
+//                FragmentTransaction ft = fm.beginTransaction();
+//                ft.replace(typeContainer.getId(), mtf, "massTypeLayout");
+//                ft.commit();
+                System.out.println("SETTING SELECTED TYPE TO MASS");
             }
         });
         buttonVolume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.remove(mtf);
-                ft.remove(ltf);
-                ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
-                ft.commit();
+                setCurrentTypeFragment(vtf);
+
+                mtf.getView().setVisibility(View.INVISIBLE);
+                vtf.getView().setVisibility(View.VISIBLE);
+                ltf.getView().setVisibility(View.INVISIBLE);
+//                FragmentTransaction ft = fm.beginTransaction();
+//                ft.replace(typeContainer.getId(), vtf, "volumeTypeLayout");
+//                ft.commit();
+                System.out.println("SETTING SELECTED TYPE TO VOLUME");
             }
         });
         buttonLength.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.remove(mtf);
-                ft.remove(vtf);
-                ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
-                ft.commit();
+                setCurrentTypeFragment(ltf);
+
+                mtf.getView().setVisibility(View.INVISIBLE);
+                vtf.getView().setVisibility(View.INVISIBLE);
+                ltf.getView().setVisibility(View.VISIBLE);
+//                FragmentTransaction ft = fm.beginTransaction();
+//                ft.replace(typeContainer.getId(), ltf, "lengthTypeLayout");
+//                ft.commit();
+                System.out.println("SETTING SELECTED TYPE TO LENGTH");
             }
         });
         return view;
-    }
-
-    public View getCurrentUnitView() {
-        return currentUnitView;
-    }
-
-    public void setCurrentUnitView(View currentUnitView) {
-        this.currentUnitView = currentUnitView;
     }
 
     public void syncWithEmptyQueue() {
@@ -225,8 +235,8 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
 
     }
     public void queueCurrentMeasurement() {
-        if (!currentValueString.equals("") && currentUnitView != null) {
-            calc.queue(currentValueString + ((TextView)currentUnitView).getText().toString());
+        if (!currentValueString.equals("") && getCurrentTypeFragment().getCurrentUnitView() != null) {
+            calc.queue(currentValueString + ((TextView)getCurrentTypeFragment().getCurrentUnitView()).getText().toString());
         } else {
             calc.queue(currentValueString);
         }
@@ -238,5 +248,13 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
 
     public void setCurrentValueString(String currentValueString) {
         this.currentValueString = currentValueString;
+    }
+
+    public TypeFragment getCurrentTypeFragment() {
+        return currentTypeFragment;
+    }
+
+    public void setCurrentTypeFragment(TypeFragment currentTypeFragment) {
+        this.currentTypeFragment = currentTypeFragment;
     }
 }

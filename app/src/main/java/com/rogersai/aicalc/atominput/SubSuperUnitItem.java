@@ -64,10 +64,10 @@ public class SubSuperUnitItem extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MeasurementAtomTab.getInstance().getCurrentUnitView() != null) {
-                    MeasurementAtomTab.getInstance().getCurrentUnitView().setSelected(false);
+                if (MeasurementAtomTab.getInstance().getCurrentTypeFragment().getCurrentUnitView() != null) {
+                    MeasurementAtomTab.getInstance().getCurrentTypeFragment().getCurrentUnitView().setSelected(false);
                 }
-                MeasurementAtomTab.getInstance().setCurrentUnitView(textView);
+                MeasurementAtomTab.getInstance().getCurrentTypeFragment().setCurrentUnitView(textView);
                 textView.setSelected(true);
                 MeasurementAtomTab.getInstance().syncWithEmptyQueue();
                 MeasurementAtomTab.getInstance().queueCurrentMeasurement();
