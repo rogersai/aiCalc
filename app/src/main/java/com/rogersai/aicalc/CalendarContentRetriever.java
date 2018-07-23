@@ -85,6 +85,7 @@ public class CalendarContentRetriever {
         }
 
     }
+
     public ArrayList<Pair<String, String>> getHolidays() {
         ArrayList<Pair<String, String>> holidays = new ArrayList<>();
         // TODO: Make getHolidays only refresh if necessary

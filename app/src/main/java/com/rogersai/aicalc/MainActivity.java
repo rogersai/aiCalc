@@ -17,6 +17,16 @@ import com.rogersai.aicalc.register.RegisterFragment;
 
 
 public class MainActivity extends AppCompatActivity {
+    // TODO: Complete cloud item generation
+    // TODO: Refactor to split display text and formula text
+
+    /*
+        Feature Wishlist
+        ================
+        List contact birthdays by nickname if available, instead of given name
+        Color code cloud entries based on their source
+     */
+
     private CalcBackend calc;
     private FragmentManager fm;
 
@@ -129,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
         buttonEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calc.evaluateInput();
+//                calc.evaluateInput();
+                calc.getContactCR().getBirthdays();
             }
         });
         buttonClear.setOnClickListener(new View.OnClickListener() {

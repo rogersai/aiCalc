@@ -22,7 +22,7 @@ public class InputEvaluator {
             for (int i = 0; i < workingList.size(); i++) {
                 if (workingList.get(i).getType().equals("multiplication") || workingList.get(i).getType().equals("division")) {
                     Operator op = (Operator) workingList.get(i);
-                    Symbol result = op.operate((Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1));
+                    Symbol result = op.operate(new Atom[]{(Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1)});
                     workingList.set(i, result);
                     workingList.remove(i + 1);
                     workingList.remove(i - 1);
@@ -34,7 +34,7 @@ public class InputEvaluator {
             for (int i = 0; i < workingList.size(); i++) {
                 if (workingList.get(i).getType().equals("addition") || workingList.get(i).getType().equals("subtraction")) {
                     Operator op = (Operator) workingList.get(i);
-                    Symbol result = op.operate((Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1));
+                    Symbol result = op.operate(new Atom[]{(Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1)});
                     workingList.set(i, result);
                     workingList.remove(i + 1);
                     workingList.remove(i - 1);

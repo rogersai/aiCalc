@@ -2,13 +2,6 @@ package com.rogersai.aicalc.symbol.atom;
 
 import android.support.v4.util.Pair;
 
-import com.rogersai.aicalc.Parser;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,24 +10,37 @@ public class MeasurementAtom extends Atom{
     private static final String BASE_LENGTH_UNIT = "m";
     private static final String BASE_MASS_UNIT = "g";
     private static final String BASE_VOLUME_UNIT = "L";
-    private static final Map<String, Double> METRIC_PREFIXES= new HashMap<String, Double>();
-    private static final Map<String, Double> LENGTH_UNITS = new HashMap<String, Double>();
-    private static final Map<String, Double> MASS_UNITS = new HashMap<String, Double>();
-    private static final Map<String, Double> VOLUME_UNITS = new HashMap<String, Double>();
+    private static final Map<String, Double> BASE_TYPE_FACTORS = new HashMap<>();
+    private static final Map<String, Double> BASE_UNIT_OUTPUTS = new HashMap<>();
+    private static final Map<String, Double> METRIC_PREFIXES= new HashMap<>();
+    private static final Map<String, Double> LENGTH_UNITS = new HashMap<>();
+    private static final Map<String, Double> MASS_UNITS = new HashMap<>();
+    private static final Map<String, Double> VOLUME_UNITS = new HashMap<>();
+    private static final Map<String, Map<String, Double>> UNITS = new HashMap<>();
     static {
+        // Generate conversion factors between different bases
+        // Preliminary Mass - Volume conversion is based on density of water
+        // Volume - Length conversion based on cubing length value
+        // Length - Mass conversion combines the two above
+
+        BASE_TYPE_FACTORS.put("length", 1000.0);
+        BASE_TYPE_FACTORS.put("mass", 0.001);
+        BASE_TYPE_FACTORS.put("volume", 1.0);
+
         // Generate list of metric prefixes
-        METRIC_PREFIXES.put("p", (double) (10 ^ (-12)));
-        METRIC_PREFIXES.put("n", (double) (10 ^ (-9)));
-        METRIC_PREFIXES.put("u", (double) (10 ^ (-6)));
-        METRIC_PREFIXES.put("m", (double) (10 ^ (-3)));
-        METRIC_PREFIXES.put("c", (double) (10 ^ (-2)));
-        METRIC_PREFIXES.put("d", (double) (10 ^ (-1)));
-        METRIC_PREFIXES.put("da", (double) (10 ^ (1)));
-        METRIC_PREFIXES.put("h", (double) (10 ^ (2)));
-        METRIC_PREFIXES.put("k", (double) (10 ^ (3)));
-        METRIC_PREFIXES.put("M", (double) (10 ^ (6)));
-        METRIC_PREFIXES.put("G", (double) (10 ^ (9)));
-        METRIC_PREFIXES.put("T", (double) (10 ^ (12)));
+
+        METRIC_PREFIXES.put("p", Math.pow(10, -12));
+        METRIC_PREFIXES.put("n", Math.pow(10, -9));
+        METRIC_PREFIXES.put("u", Math.pow(10, -6));
+        METRIC_PREFIXES.put("m", Math.pow(10, -3));
+        METRIC_PREFIXES.put("c", Math.pow(10, -2));
+        METRIC_PREFIXES.put("d", Math.pow(10, -1));
+        METRIC_PREFIXES.put("da", Math.pow(10, 1));
+        METRIC_PREFIXES.put("h", Math.pow(10, 2));
+        METRIC_PREFIXES.put("k", Math.pow(10, 3));
+        METRIC_PREFIXES.put("M", Math.pow(10, 6));
+        METRIC_PREFIXES.put("G", Math.pow(10, 9));
+        METRIC_PREFIXES.put("T", Math.pow(10, 12));
 
         // Start unit lists with base metric unit
         LENGTH_UNITS.put(BASE_LENGTH_UNIT, (double) 1);
@@ -66,24 +72,45 @@ public class MeasurementAtom extends Atom{
         VOLUME_UNITS.put("tbsp", 0.0148);
         VOLUME_UNITS.put("tsp", 0.0049);
 
+        UNITS.put("length", LENGTH_UNITS);
+        UNITS.put("mass", MASS_UNITS);
+        UNITS.put("volume", VOLUME_UNITS);
         for (String item : LENGTH_UNITS.keySet()) {
             System.out.println(item + " " + LENGTH_UNITS.get(item));
         }
     }
 
     private double value;
+    private String unit;
+    private String unitType;
 
-    public static MeasurementAtom convertUnit(double value, String oldUnit, String newUnit) {
-        return null;
+    public static MeasurementAtom convert(MeasurementAtom m, String newUnit) {
+        double currentValue = m.getValue();
+        double conversionToBase = UNITS.get(m.getUnitType()).get(m.getUnit());
+        double inputTypeFactor = BASE_TYPE_FACTORS.get(m.getUnitType());
+        double outputTypeFactor = 1 / BASE_TYPE_FACTORS.get(MeasurementAtom.findUnitType(newUnit));
+        double conversionFromBase = 1 / UNITS.get(findUnitType(newUnit)).get(newUnit);
+
+        double newValue =  currentValue * conversionToBase * inputTypeFactor * outputTypeFactor * conversionFromBase;
+        return new MeasurementAtom(newValue, newUnit);
     }
 
-    private String unit;
+    public static String findUnitType(String unit){
+        for ( String type : UNITS.keySet() ) {
+            if(UNITS.get(type).containsKey(unit)){
+                return type;
+            }
+        }
+        return "Unknown";
+    }
+
 
     public MeasurementAtom(double value, String unit) {
         super();
         type = "measurement";
         this.value = value;
         this.unit = unit;
+        this.unitType = MeasurementAtom.findUnitType(unit);
     }
 
     @Override
@@ -128,4 +155,11 @@ public class MeasurementAtom extends Atom{
         return unit;
     }
 
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
+    }
 }

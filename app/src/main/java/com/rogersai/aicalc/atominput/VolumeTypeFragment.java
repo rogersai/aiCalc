@@ -37,7 +37,7 @@ public class VolumeTypeFragment extends Fragment implements UnitLister , TypeFra
         VOLUME_SUBUNITS.put("mL", new String[]{"uL", "nL"});
 
         VOLUME_SUPERUNITS.put("cp", new String[]{"pt", "qt", "gal", "L"});
-        VOLUME_SUBUNITS.put("cp", new String[]{"Ts", "ts", "oz", "mL"});
+        VOLUME_SUBUNITS.put("cp", new String[]{"tbsp", "tsp", "oz", "mL"});
 
         VOLUME_SUPERUNITS.put("gal", new String[]{});
         VOLUME_SUBUNITS.put("gal", new String[]{"L", "qt", "pt", "cp", "oz"});

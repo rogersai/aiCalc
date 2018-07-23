@@ -69,7 +69,6 @@ public class AtomParser {
     }
 
     public MeasurementAtom parseMeasurement(String input) {
-        // TODO: Implement
         MeasurementAtom atom = null;
         try {
             if (input.matches("(\\d*\\.?\\d+[a-zA-Z]+)|(\\d+\\.?\\d*[a-zA-Z]+)")) {

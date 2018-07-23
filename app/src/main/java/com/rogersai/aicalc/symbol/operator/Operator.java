@@ -12,23 +12,31 @@ public class Operator extends Symbol {
         category = "operator";
     }
 
-    public Atom operate(Atom pre, Atom post) {
-        Atom result = null;
-        if (pre.getType().equals("number") && post.getType().equals("number")) {
-            result =  operate(pre.toNumber(), post.toNumber());
-        } else if (pre.getType().equals("date") && post.getType().equals("date")) {
-            result =  operate(pre.toDate(), post.toDate());
-        } else {
-            System.out.println("Addition failed, falling back to blank result");
-            result =  new Atom();
-        }
-        return result;
-    }
+//    public Atom operate(Atom pre, Atom post) {
+//        Atom result = null;
+//        if (pre.getType().equals("number") && post.getType().equals("number")) {
+//            result =  operate(pre.toNumber(), post.toNumber());
+//        } else if (pre.getType().equals("date") && post.getType().equals("date")) {
+//            result =  operate(pre.toDate(), post.toDate());
+//        } else {
+//            result =  new Atom();
+//        }
+//        return result;
+//    }
 
     public Atom operate(Atom[] operands) {
         Atom pre = operands[0];
         Atom post = operands[1];
-        return operate(pre, post);
+        if(operands[0].getType().equals("number")) {
+            return operate((NumberAtom) pre, (NumberAtom) post);
+        } else if(operands[0].getType().equals("date")) {
+            return operate((DateAtom) pre, (DateAtom) post);
+        } else if(operands[0].getType().equals("measurement")) {
+            return operate((MeasurementAtom) pre, (MeasurementAtom) post);
+        } else{
+            System.out.println("Addition failed, falling back to blank result");
+            return new Atom();
+        }
     }
 
     public NumberAtom operate(NumberAtom pre, NumberAtom post) {

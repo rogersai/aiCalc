@@ -11,9 +11,7 @@ import java.util.ArrayList;
 
 public class DateAtom extends Atom{
     public static final String[] MONTHS = {"NON", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
-    public static final DateTime EPOCH_OLD = new DateTime(0, DateTimeZone.UTC);
     public static final DateTime EPOCH = new DateTime(0, DateTimeZone.UTC).withZoneRetainFields(DateTimeZone.getDefault()).withZone(DateTimeZone.UTC);
-    public static final DateTime EPOCH2_Daylight = new DateTime( 0 - DateTimeZone.getDefault().getOffset(new DateTime())).withZone(DateTimeZone.UTC);
     public static final DateTimeFormatter formatter = DateTimeFormat.forPattern("ddMMMYYYY");
     private DateTime date;
 
@@ -21,7 +19,6 @@ public class DateAtom extends Atom{
         //TODO: Implement constructor
         super();
         type = "date";
-
     }
 
     public DateAtom(int day, int month, int year) {
@@ -33,12 +30,6 @@ public class DateAtom extends Atom{
         super();
         type = "date";
         this.date = dt.withZone(DateTimeZone.UTC);
-    }
-
-    @Override
-    public NumberAtom toNumber() {
-        //TODO: Implement toNumber
-        return null;
     }
 
     @Override

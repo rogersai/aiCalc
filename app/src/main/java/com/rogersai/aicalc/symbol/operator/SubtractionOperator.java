@@ -16,42 +16,26 @@ public class SubtractionOperator extends Operator {
         type = "subtraction";
     }
 
-//    @Override
-//    public Atom operate(Atom pre, Atom post) {
-//        Atom result = null;
-//        if (pre.getType().equals("number") || post.getType().equals("number")) {
-//            result =  operate(pre.toNumber(), post.toNumber());
-//        } else {
-//            System.out.println("Subtraction failed, falling back to blank result");
-//            result =  new Atom();
-//        }
-//        return result;
-//    }
-
     public NumberAtom operate(NumberAtom pre, NumberAtom post) {
         return new NumberAtom(pre.getValue() - post.getValue());
     }
 
     @Override
     public DateAtom operate(DateAtom pre, DateAtom post) {
-//        System.out.println("Pre: " + pre.getDate().toString());
-//        System.out.println("Post: " + post.getDate().toString());
-//        System.out.println("Epoch: " + DateAtom.EPOCH.toString());
-//        System.out.println("Epoch2: " + DateAtom.EPOCH2.toString());
-//        System.out.println("Epoch3: " + DateAtom.EPOCH3.toString());
         Duration difference = new Duration(post.getDate(), pre.getDate());
-//        System.out.println("Post duration: " + postDuration.getStandardDays());
         DateTime result = DateAtom.EPOCH.withDurationAdded(difference, 1);
-//        System.out.println("Added: " + result.toString());
-//        DateTime result = new DateTime(pre.getDate().getMillis() + post.getDate().getMillis(), DateTimeZone.UTC);
         return new DateAtom(result);
     }
     @Override
     public MeasurementAtom operate(MeasurementAtom pre, MeasurementAtom post) {
-        // TODO: Fix implementation for different units
-        double resultValue = pre.getValue() + post.getValue();
-        String resultUnit = pre.getUnit();
-        return new MeasurementAtom(resultValue, resultUnit);
+        double resultValue = 0;
+        if (pre.getUnit().equals(post.getUnit())) {
+            resultValue = pre.getValue() - post.getValue();
+        } else {
+            MeasurementAtom converted = MeasurementAtom.convert(post, pre.getUnit());
+            resultValue = pre.getValue() - converted.getValue();
+        }
+        return new MeasurementAtom(resultValue, pre.getUnit());
     }
 
     @Override

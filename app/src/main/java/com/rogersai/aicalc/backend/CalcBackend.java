@@ -199,7 +199,7 @@ public class CalcBackend extends Fragment{
     public void repopulateCloud() {
 //        try {
             clearCloud();
-        inputTabsToCloud();
+            inputTabsToCloud();
             // TODO: Input Cloud
             outputToCloud();
 //        } catch (NullPointerException e) {

@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RegisterBackend extends Fragment {
+    // TODO: Populate registers from database on app start
     private static RegisterBackend instance;
     private FragmentManager fm;
     private RegisterFragment registerFragment;
@@ -35,6 +36,12 @@ public class RegisterBackend extends Fragment {
         getHelper();
         System.out.println("GETHELPER CALLED IN ONCREATEVIEW*****88888");
         return null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        populate();
     }
 
     public static RegisterBackend getInstance(RegisterFragment rf) {
@@ -85,10 +92,25 @@ public class RegisterBackend extends Fragment {
         RuntimeExceptionDao<RegisterEntry, Integer> registerDao = getHelper().getRegisterDao();
         for(RegisterEntry re : registerDao.queryForAll()) {
             int id = re.getId();
+            System.out.println("Register ID: " + "reg" + id);
             RegisterItem ri = (RegisterItem) fm.findFragmentByTag("reg" + id);
             ri.calculate();
         }
     }
+
+    public void populate() {
+        RuntimeExceptionDao<RegisterEntry, Integer> registerDao = getHelper().getRegisterDao();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        for(RegisterEntry re : registerDao.queryForAll()) {
+            int id = re.getId();
+            RegisterItem registerItem = RegisterItem.newInstance(re);
+            Fragment ri = (Fragment) registerItem;
+            fragmentTransaction.add(registerFragment.getRegisterView().getId(), registerItem, "reg" + re.getId());
+        }
+        fragmentTransaction.commit();
+
+    }
+
     public void testSelf() {
         String tag = "";
         int itemID = 0;

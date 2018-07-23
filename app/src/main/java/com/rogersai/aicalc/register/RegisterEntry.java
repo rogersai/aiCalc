@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class RegisterEntry {
     private static int nextID = 0;
 
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
     private String formulaString;
@@ -16,9 +16,9 @@ public class RegisterEntry {
     }
 
     public RegisterEntry(String formulaString) {
-        this.id = nextID;
+//        this.id = nextID;
         this.formulaString = formulaString;
-        nextID++;
+//        nextID++;
     }
 
     public int getId() {
@@ -28,5 +28,9 @@ public class RegisterEntry {
     public String getFormulaString() {
         return formulaString;
     }
+
+//    public static void setNextID(int id) {
+//        nextID = id;
+//    }
 
 }
