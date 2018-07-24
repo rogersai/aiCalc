@@ -72,9 +72,12 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
         setCurrentTypeFragment(mtf);
 
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(typeContainer.getId(), mtf, "massTypeLayout");
-        ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
-        ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
+//        if(!mtf.isAdded())
+            ft.add(typeContainer.getId(), mtf, "massTypeLayout");
+//        if(!vtf.isAdded())
+            ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
+//        if(!ltf.isAdded())
+            ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
         ft.commit();
         System.out.println("SETTING SELECTED TYPE TO MASS");
         selectedType = "mass";

@@ -1,5 +1,8 @@
 package com.rogersai.aicalc.backend.evaluator;
 
+import android.view.accessibility.CaptioningManager;
+
+import com.rogersai.aicalc.backend.CalcBackend;
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.Atom;
 import com.rogersai.aicalc.symbol.grouper.LParenGrouper;
@@ -8,6 +11,14 @@ import com.rogersai.aicalc.symbol.operator.Operator;
 import java.util.ArrayList;
 
 public class InputEvaluator {
+    private CalcBackend calc;
+
+    public InputEvaluator() {
+        super();
+        calc = CalcBackend.getInstance();
+    }
+
+
     public Symbol evaluate (ArrayList<Symbol> input) {
         ArrayList<Symbol> workingList = input;
         Symbol lParen = new LParenGrouper();
@@ -22,7 +33,7 @@ public class InputEvaluator {
             for (int i = 0; i < workingList.size(); i++) {
                 if (workingList.get(i).getType().equals("multiplication") || workingList.get(i).getType().equals("division")) {
                     Operator op = (Operator) workingList.get(i);
-                    Symbol result = op.operate(new Atom[]{(Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1)});
+                    Symbol result = op.operate(calc.cast(new Atom[]{(Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1)}));
                     workingList.set(i, result);
                     workingList.remove(i + 1);
                     workingList.remove(i - 1);
@@ -34,7 +45,7 @@ public class InputEvaluator {
             for (int i = 0; i < workingList.size(); i++) {
                 if (workingList.get(i).getType().equals("addition") || workingList.get(i).getType().equals("subtraction")) {
                     Operator op = (Operator) workingList.get(i);
-                    Symbol result = op.operate(new Atom[]{(Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1)});
+                    Symbol result = op.operate(calc.cast(new Atom[]{(Atom)workingList.get(i - 1), (Atom)workingList.get(i + 1)}));
                     workingList.set(i, result);
                     workingList.remove(i + 1);
                     workingList.remove(i - 1);

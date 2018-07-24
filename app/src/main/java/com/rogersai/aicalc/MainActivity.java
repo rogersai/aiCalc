@@ -17,8 +17,10 @@ import com.rogersai.aicalc.register.RegisterFragment;
 
 
 public class MainActivity extends AppCompatActivity {
+    // TODO: Fix crash on switching tabs
     // TODO: Complete cloud item generation
-    // TODO: Refactor to split display text and formula text
+    // TODO: Finalize layouts
+    // TODO: Add icons
 
     /*
         Feature Wishlist

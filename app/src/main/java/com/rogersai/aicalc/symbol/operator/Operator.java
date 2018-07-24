@@ -27,16 +27,27 @@ public class Operator extends Symbol {
     public Atom operate(Atom[] operands) {
         Atom pre = operands[0];
         Atom post = operands[1];
-        if(operands[0].getType().equals("number")) {
-            return operate((NumberAtom) pre, (NumberAtom) post);
-        } else if(operands[0].getType().equals("date")) {
-            return operate((DateAtom) pre, (DateAtom) post);
-        } else if(operands[0].getType().equals("measurement")) {
-            return operate((MeasurementAtom) pre, (MeasurementAtom) post);
-        } else{
-            System.out.println("Addition failed, falling back to blank result");
-            return new Atom();
+        switch (pre.getType()){
+            case "number":
+                return operate((NumberAtom) pre, (NumberAtom) post);
+            case "date":
+                return operate((DateAtom) pre, (DateAtom) post);
+            case "measurement":
+                return operate((MeasurementAtom) pre, (MeasurementAtom) post);
+            default:
+                System.out.println("Operation failed, falling back to blank result");
+                return new Atom();
         }
+//        if(operands[0].getType().equals("number")) {
+//            return operate((NumberAtom) pre, (NumberAtom) post);
+//        } else if(operands[0].getType().equals("date")) {
+//            return operate((DateAtom) pre, (DateAtom) post);
+//        } else if(operands[0].getType().equals("measurement")) {
+//            return operate((MeasurementAtom) pre, (MeasurementAtom) post);
+//        } else{
+//            System.out.println("Addition failed, falling back to blank result");
+//            return new Atom();
+//        }
     }
 
     public NumberAtom operate(NumberAtom pre, NumberAtom post) {

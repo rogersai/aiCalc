@@ -15,6 +15,7 @@ import com.rogersai.aicalc.Parser;
 import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.atominput.AtomBackend;
 import com.rogersai.aicalc.atominput.AtomFragment;
+import com.rogersai.aicalc.backend.evaluator.Caster;
 import com.rogersai.aicalc.cloud.CloudBackend;
 import com.rogersai.aicalc.register.RegisterBackend;
 import com.rogersai.aicalc.symbol.Symbol;
@@ -43,13 +44,20 @@ public class CalcBackend extends Fragment{
 
     private Parser parser;
     private Evaluator evaluator;
+    private Caster caster;
 
     private TextView input;
     private TextView output;
     private Atom outputAtom;
 
-    private String currentInput = "";
-    private String queuedInput = "";
+    private String inputFormula = "";
+    private String inputDisplay = "";
+
+    private String currentInputFormula = "";
+    private String queuedInputFormula = "";
+
+    private String currentInputDisplay = "";
+    private String queuedInputDisplay = "";
 
     //private CloudFragment cloud;
     //private AtomFragment tabs;
@@ -108,42 +116,69 @@ public class CalcBackend extends Fragment{
         return result;
     }
 
+    public Atom[] cast(Atom[] operands) {
+        Atom[] result = evaluator.caster().cast(operands);
+        return result;
+    }
+
     //////////////////////
     // Display Functions
     //////////////////////
-    public void input(String s) {
-        if (!queuedInput.equals("")) {
-            input.setText(currentInput + queuedInput);
+    public void input(String formula, String display) {
+        if (!queuedInputFormula.equals("")) {
+            inputFormula = currentInputFormula + queuedInputFormula;
+            inputDisplay = currentInputDisplay + queuedInputDisplay;
+            input.setText(inputDisplay);
         }
-        currentInput = "";
-        queuedInput = "";
-        if(!input.getText().equals("") && operators.contains(s) && getLastCategory().equals("operator")) {
-            input.setText(input.getText().subSequence(0, input.getText().length() - 1));
+        currentInputFormula = "";
+        queuedInputFormula = "";
+        currentInputDisplay = "";
+        queuedInputDisplay = "";
+        if(!inputFormula.equals("") && operators.contains(formula) && getLastCategory().equals("operator")) {
+            inputFormula = String.valueOf(inputFormula.subSequence(0, inputFormula.length() - 1));
+            inputDisplay = String.valueOf(inputDisplay.subSequence(0, inputDisplay.length() - 1));
+            input.setText(inputDisplay);
         }
-        input.setText(input.getText() + s);
+        inputFormula = inputFormula + formula;
+        inputDisplay = inputDisplay + display;
+        input.setText(inputDisplay);
         parseInput();
         if(getLastCategory().equals("atom")){
             evaluateInput();
         }
     }
-    public void queue(String s) {
-        if (queuedInput.equals("")) {
-            String inputText = input.getText().toString();
-            if (!inputText.equals("null")) {
-                currentInput = inputText;
+
+    public void input(String formula) {
+        input(formula, formula);
+    }
+
+    public void queue(String formula, String display) {
+        if (queuedInputFormula.equals("")) {
+            if (!inputFormula.equals("null")) {
+                currentInputFormula = inputFormula;
+                currentInputDisplay = inputDisplay;
             } else {
-                currentInput = "";
+                currentInputFormula = "";
+                currentInputDisplay = "";
             }
         }
-        queuedInput = s;
-        input.setText(currentInput + queuedInput);
+        queuedInputFormula = formula;
+        queuedInputDisplay = display;
+        inputFormula = currentInputFormula + queuedInputFormula;
+        inputDisplay = currentInputDisplay + queuedInputDisplay;
+        input.setText(inputDisplay);
         parseInput();
         if(getLastCategory().equals("atom")){
             evaluateInput();
         }
     }
+
+    public void queue(String formula) {
+        queue(formula, formula);
+    }
+
     public boolean hasQueue() {
-        if (!queuedInput.equals("")) {
+        if (!queuedInputFormula.equals("")) {
             return true;
         } else {
             return false;
@@ -151,20 +186,23 @@ public class CalcBackend extends Fragment{
     }
 
     public void parseInput() {
-        parsedList = parse(input.getText().toString());
+        parsedList = parse(inputFormula);
     }
 
     public void evaluateInput() {
-        Symbol s = evaluate(input.getText().toString());
-        //NumberAtom n = (NumberAtom) evaluator.input().evaluate(parser.input().parseInput(input.getText().toString()));
+        Symbol s = evaluate(inputFormula);
         output.setText(s.toString());
     }
 
     public void clear() {
         input.setText("");
+        inputFormula = "";
+        inputDisplay = "";
         parsedList.clear();
-        currentInput = "";
-        queuedInput = "";
+        currentInputFormula = "";
+        queuedInputFormula = "";
+        currentInputDisplay = "";
+        queuedInputDisplay = "";
         clearSymbols();
     }
 
@@ -226,8 +264,7 @@ public class CalcBackend extends Fragment{
     }
 
     public void registerInput() {
-        String formulaString = input.getText().toString();
-        register.add(formulaString);
+        register.add(inputFormula);
     }
     public void clearRegister() {
             register.clear();
@@ -249,7 +286,7 @@ public class CalcBackend extends Fragment{
     // Support Methods
     ///////////////
     public String reportInput() {
-        return input.getText().toString();
+        return inputFormula;
     }
 
     public void clearSymbols() {
@@ -321,5 +358,9 @@ public class CalcBackend extends Fragment{
 
     public void setContactCR(ContactContentRetriever contactCR) {
         this.contactCR = contactCR;
+    }
+
+    public void setCaster(Caster caster) {
+        this.caster = caster;
     }
 }

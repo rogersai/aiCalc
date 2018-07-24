@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rogersai.aicalc.R;
+import com.rogersai.aicalc.backend.CalcBackend;
 
 public class CloudItem extends Fragment {
     private String displayText;
+    private CalcBackend calc;
 
     private String formulaText;
     private int itemID;
@@ -49,6 +51,8 @@ public class CloudItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cloud_layout_item, container, false);
 
+        calc = CalcBackend.getInstance();
+
         textView = (TextView) view.findViewById(R.id.itemTextView);
         inputView = (TextView) getActivity().findViewById(R.id.inputView);
 
@@ -63,7 +67,7 @@ public class CloudItem extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputView.setText(inputView.getText()+ getFormulaText());
+                calc.input(getFormulaText());
             }
         });
         return view;
