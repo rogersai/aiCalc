@@ -15,7 +15,6 @@ public class Atom extends Symbol implements CloudGenerator{
     }
 
     public ArrayList<Pair<String, String>> generateCloudItems() {
-        //TODO: Implement generateCloudItems
         return null;
     }
 

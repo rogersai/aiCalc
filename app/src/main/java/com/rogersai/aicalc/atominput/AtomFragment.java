@@ -47,6 +47,7 @@ public class AtomFragment extends Fragment {
 
         Pager adapter= new Pager(getActivity().getSupportFragmentManager(), atomTabLayout.getTabCount());
         atomViewPager.setAdapter(adapter);
+        atomViewPager.setOffscreenPageLimit(2);
         atomBackend = AtomBackend.getInstance(atomViewPager);
 
         calc.setAtomBackend(atomBackend);

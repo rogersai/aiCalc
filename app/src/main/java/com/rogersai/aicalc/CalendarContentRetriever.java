@@ -120,6 +120,7 @@ public class CalendarContentRetriever {
             startMillis = eventsCursor.getLong(EVENTS_PROJECTION_START_INDEX);
             DateTime startDate = new DateTime(startMillis, DateTimeZone.UTC);
             String startDateString = DateAtom.formatter.print(startDate).toUpperCase();
+            System.out.println(title + " " + startDateString);
             holidays.add(new Pair(title, startDateString));
 //            endDate = eventsCursor.getString(EVENTS_PROJECTION_END_INDEX);
 //            allDay = eventsCursor.getString(EVENTS_PROJECTION_ALL_DAY_INDEX);

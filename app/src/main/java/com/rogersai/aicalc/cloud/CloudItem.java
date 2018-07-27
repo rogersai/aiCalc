@@ -24,7 +24,6 @@ public class CloudItem extends Fragment {
     private FragmentManager fragmentManager;
 
     public static CloudItem newInstance(String displayText, String formulaText) {
-        // TODO: Complete refactor for adding formulaText
         CloudItem item = new CloudItem();
         Bundle args = new Bundle();
         args.putString("displayText", displayText);
@@ -36,7 +35,6 @@ public class CloudItem extends Fragment {
     }
 
     public static CloudItem newInstance(String displayText) {
-        // TODO: Complete refactor for adding formulaText
         CloudItem item = new CloudItem();
         Bundle args = new Bundle();
         args.putString("displayText", displayText);

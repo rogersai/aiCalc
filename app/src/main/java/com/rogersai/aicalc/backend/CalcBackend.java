@@ -192,6 +192,7 @@ public class CalcBackend extends Fragment{
     public void evaluateInput() {
         Symbol s = evaluate(inputFormula);
         output.setText(s.toString());
+        repopulateCloud();
     }
 
     public void clear() {
@@ -279,6 +280,15 @@ public class CalcBackend extends Fragment{
         }
         register(registerList);
     }
+
+
+    //////////////////////
+    // Content Methods
+    //////////////////////
+    public ArrayList<Pair<String, String>> getHolidays() {
+        return calendarCR.getHolidays();
+    }
+
     public void removeReg(int id) {
         register.remove(id);
     }

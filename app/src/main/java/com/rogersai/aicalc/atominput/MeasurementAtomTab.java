@@ -1,8 +1,6 @@
 package com.rogersai.aicalc.atominput;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -18,13 +16,9 @@ import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.backend.CalcBackend;
 
 public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
-    private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
-    private Button buttonMass, buttonVolume, buttonLength;
-    private FrameLayout typeContainer;
 
 
     private CalcBackend calc;
-    private FragmentManager fm;
 
     private String currentValueString = "";
     private TypeFragment currentTypeFragment;
@@ -32,7 +26,6 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
     private MassTypeFragment mtf;
     private VolumeTypeFragment vtf;
     private LengthTypeFragment ltf;
-    private String selectedType = "";
 
     private static MeasurementAtomTab instance;
 
@@ -43,28 +36,29 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
         return instance;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.measurement_atom_tab, container, false);
-        button0 = view.findViewById(R.id.button0);
-        button1 = view.findViewById(R.id.button1);
-        button2 = view.findViewById(R.id.button2);
-        button3 = view.findViewById(R.id.button3);
-        button4 = view.findViewById(R.id.button4);
-        button5 = view.findViewById(R.id.button5);
-        button6 = view.findViewById(R.id.button6);
-        button7 = view.findViewById(R.id.button7);
-        button8 = view.findViewById(R.id.button8);
-        button9 = view.findViewById(R.id.button9);
+        Button button0 = view.findViewById(R.id.button0);
+        Button button1 = view.findViewById(R.id.button1);
+        Button button2 = view.findViewById(R.id.button2);
+        Button button3 = view.findViewById(R.id.button3);
+        Button button4 = view.findViewById(R.id.button4);
+        Button button5 = view.findViewById(R.id.button5);
+        Button button6 = view.findViewById(R.id.button6);
+        Button button7 = view.findViewById(R.id.button7);
+        Button button8 = view.findViewById(R.id.button8);
+        Button button9 = view.findViewById(R.id.button9);
 
-        buttonMass = view.findViewById(R.id.buttonMass);
-        buttonVolume = view.findViewById(R.id.buttonVolume);
-        buttonLength = view.findViewById(R.id.buttonLength);
+        Button buttonMass = view.findViewById(R.id.buttonMass);
+        Button buttonVolume = view.findViewById(R.id.buttonVolume);
+        Button buttonLength = view.findViewById(R.id.buttonLength);
 
-        typeContainer = view.findViewById(R.id.typeContainer);
+        FrameLayout typeContainer = view.findViewById(R.id.typeContainer);
 
         calc = CalcBackend.getInstance();
-        fm = getActivity().getSupportFragmentManager();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
 
         mtf = MassTypeFragment.getInstance();
         vtf = VolumeTypeFragment.getInstance();
@@ -72,15 +66,11 @@ public class MeasurementAtomTab extends AtomTab implements CloudGenerator {
         setCurrentTypeFragment(mtf);
 
         FragmentTransaction ft = fm.beginTransaction();
-//        if(!mtf.isAdded())
-            ft.add(typeContainer.getId(), mtf, "massTypeLayout");
-//        if(!vtf.isAdded())
-            ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
-//        if(!ltf.isAdded())
-            ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
+        ft.add(typeContainer.getId(), mtf, "massTypeLayout");
+        ft.add(typeContainer.getId(), vtf, "volumeTypeLayout");
+        ft.add(typeContainer.getId(), ltf, "lengthTypeLayout");
         ft.commit();
         System.out.println("SETTING SELECTED TYPE TO MASS");
-        selectedType = "mass";
 
 
         button1.setOnClickListener(new View.OnClickListener() {

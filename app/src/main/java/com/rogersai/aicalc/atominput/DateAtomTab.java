@@ -150,9 +150,9 @@ public class DateAtomTab extends AtomTab implements CloudGenerator{
     }
     @Override
     public ArrayList<Pair<String, String>> generateCloudItems() {
-        CalendarContentRetriever ccr = calc.getCalendarCR();
-        ArrayList<Pair<String, String>> cloudList = ccr.getHolidays();
-        cloudList.add(0, new Pair("Date", "Date"));
+        System.out.println("Generating cloud items for date tab");
+        ArrayList<Pair<String, String>> cloudList = calc.getHolidays();
+//        calc.cloud(cloudList);
 //        System.out.print(getSelectedSpinnerItem(dayList, dayPicker));
 //        System.out.print(getSelectedSpinnerItem(monthList, monthPicker));
 //        System.out.println(getSelectedSpinnerItem(yearList, yearPicker));
@@ -206,4 +206,5 @@ public class DateAtomTab extends AtomTab implements CloudGenerator{
             return false;
         }
     }
+
 }

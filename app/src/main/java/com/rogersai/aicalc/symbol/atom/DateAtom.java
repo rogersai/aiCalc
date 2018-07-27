@@ -4,6 +4,7 @@ import android.support.v4.util.Pair;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -34,6 +35,10 @@ public class DateAtom extends Atom{
 
     @Override
     public ArrayList<Pair<String, String>> generateCloudItems(){
+        DateAtom now = new DateAtom(DateTime.now());
+        //Duration timeFromNow = new Duration(this.getDate().getMillis(), now.getMillis());
+        String durationFormula = this.toString() + "-" + now.toString();
+        String durationDisplay = "Time Until " + this.toString();
         //TODO: Implement generateCloudItems
         return null;
     }

@@ -115,8 +115,29 @@ public class MeasurementAtom extends Atom{
 
     @Override
     public ArrayList<Pair<String, String>> generateCloudItems(){
-        //TODO: Implement generateCloudItems
-        return null;
+        System.out.println("Generating cloud for measurement atom");
+        ArrayList<Pair<String, String>> cloudList = new ArrayList<>();
+        String unitType = getUnitType();
+        if (unitType == "mass") {
+            for (String unit : MASS_UNITS.keySet()) {
+                MeasurementAtom converted = MeasurementAtom.convert(this, unit);
+                String formula = String.valueOf(converted.getValue()) + converted.getUnit();
+                cloudList.add(new Pair(formula, formula));
+            }
+        } else if (unitType == "volume") {
+            for (String unit : VOLUME_UNITS.keySet()) {
+                MeasurementAtom converted = MeasurementAtom.convert(this, unit);
+                String formula = String.valueOf(converted.getValue()) + converted.getUnit();
+                cloudList.add(new Pair(formula, formula));
+            }
+        } else if (unitType == "length") {
+            for (String unit : LENGTH_UNITS.keySet()) {
+                MeasurementAtom converted = MeasurementAtom.convert(this, unit);
+                String formula = String.valueOf(converted.getValue()) + converted.getUnit();
+                cloudList.add(new Pair(formula, formula));
+            }
+        }
+        return cloudList;
     }
 
     @Override

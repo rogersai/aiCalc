@@ -17,16 +17,16 @@ import com.rogersai.aicalc.register.RegisterFragment;
 
 
 public class MainActivity extends AppCompatActivity {
-    // TODO: Fix crash on switching tabs
     // TODO: Complete cloud item generation
-    // TODO: Finalize layouts
     // TODO: Add icons
+    // TODO: Finalize layouts
 
     /*
         Feature Wishlist
         ================
         List contact birthdays by nickname if available, instead of given name
         Color code cloud entries based on their source
+        Create list of common units for cloud population
      */
 
     private CalcBackend calc;
