@@ -23,7 +23,6 @@ public class SubSuperUnitItem extends Fragment {
     private FragmentManager fragmentManager;
 
     public static SubSuperUnitItem newInstance(String displayText, String formulaText) {
-        // TODO: Complete refactor for adding formulaText
         SubSuperUnitItem item = new SubSuperUnitItem();
         Bundle args = new Bundle();
         args.putString("displayText", displayText);
@@ -35,7 +34,6 @@ public class SubSuperUnitItem extends Fragment {
     }
 
     public static SubSuperUnitItem newInstance(String displayText) {
-        // TODO: Complete refactor for adding formulaText
         SubSuperUnitItem item = new SubSuperUnitItem();
         Bundle args = new Bundle();
         args.putString("displayText", displayText);
@@ -48,7 +46,7 @@ public class SubSuperUnitItem extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.basic_unit_item, container, false);
+        View view = inflater.inflate(R.layout.sub_super_unit_item, container, false);
 
         textView = (TextView) view.findViewById(R.id.itemTextView);
         inputView = (TextView) getActivity().findViewById(R.id.inputView);

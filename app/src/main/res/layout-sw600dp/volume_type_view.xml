@@ -13,14 +13,14 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="2.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

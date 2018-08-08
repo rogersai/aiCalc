@@ -104,10 +104,23 @@ public class DateAtomTab extends AtomTab implements CloudGenerator{
     private void initialize() {
         final GregorianCalendar gc = new GregorianCalendar();
 
+        for (int i = 0; i < 3; i++) {
+            TextView blankView = new TextView(getContext());
+            blankView.setText("");
+            blankView.setTextSize(36);
+            dayList.addView(blankView);
+        }
         for (int i = 1; i < 32; i++) {
             TextView dayView = new TextView(getContext());
             dayView.setText(Integer.toString(i));
+            dayView.setTextSize(36);
             dayList.addView(dayView);
+        }
+        for (int i = 0; i < 3; i++) {
+            TextView blankView = new TextView(getContext());
+            blankView.setText("");
+            blankView.setTextSize(36);
+            dayList.addView(blankView);
         }
 
         dayList.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -136,10 +149,23 @@ public class DateAtomTab extends AtomTab implements CloudGenerator{
 
 
         int year = gc.get(gc.YEAR);
+        for (int i = 0; i < 3; i++) {
+            TextView blankView = new TextView(getContext());
+            blankView.setText("");
+            blankView.setTextSize(36);
+            yearList.addView(blankView);
+        }
         for (int i = year - 100; i < year + 100; i++) {
             TextView yearView = new TextView(getContext());
             yearView.setText(Integer.toString(i));
+            yearView.setTextSize(36);
             yearList.addView(yearView);
+        }
+        for (int i = 0; i < 3; i++) {
+            TextView blankView = new TextView(getContext());
+            blankView.setText("");
+            blankView.setTextSize(36);
+            yearList.addView(blankView);
         }
         yearPicker.post(new Runnable() {
             @Override
@@ -152,6 +178,8 @@ public class DateAtomTab extends AtomTab implements CloudGenerator{
     public ArrayList<Pair<String, String>> generateCloudItems() {
         System.out.println("Generating cloud items for date tab");
         ArrayList<Pair<String, String>> cloudList = calc.getHolidays();
+        ArrayList<Pair<String, String>> birthdayList = calc.getBirthdays();
+        cloudList.addAll(birthdayList);
 //        calc.cloud(cloudList);
 //        System.out.print(getSelectedSpinnerItem(dayList, dayPicker));
 //        System.out.print(getSelectedSpinnerItem(monthList, monthPicker));

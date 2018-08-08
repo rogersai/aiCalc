@@ -41,11 +41,11 @@ public class Pager extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Number";
+                return "";
             case 1:
-                return "Date";
+                return "";
             case 2:
-                return "Measure";
+                return "";
             default:
                 return null;
         }

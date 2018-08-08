@@ -7,11 +7,11 @@
     <TextView
         android:id="@+id/itemTextView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="48dp"
         android:layout_margin="1dp"
         android:background="@drawable/basic_unit_item_selector"
         android:gravity="center_vertical"
-        android:minWidth="30dp"
+        android:minWidth="48dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:text="TextView"

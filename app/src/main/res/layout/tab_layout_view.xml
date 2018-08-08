@@ -9,25 +9,22 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/atomTabLayout"
         android:layout_width="0dp"
-        android:layout_height="24dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Number" />
+            android:layout_height="wrap_content" />
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date" />
+            android:layout_height="wrap_content" />
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Measure" />
+            android:layout_height="wrap_content" />
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager

@@ -5,7 +5,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +12,15 @@ import android.view.ViewGroup;
 
 import com.rogersai.aicalc.R;
 import com.rogersai.aicalc.backend.CalcBackend;
-import com.rogersai.aicalc.symbol.atom.Atom;
-
-import java.util.ArrayList;
 
 public class AtomFragment extends Fragment {
     private static AtomFragment atomFragment;
+
+    final int[] ICONS = new int[]{
+                R.drawable.number_atom_tab_icon_32,
+                R.drawable.date_atom_tab_icon_32,
+                R.drawable.measurement_atom_tab_icon_32
+            };
     private CalcBackend calc;
     private AtomBackend atomBackend;
     private FragmentManager fm;
@@ -34,9 +36,6 @@ public class AtomFragment extends Fragment {
         return atomFragment;
     }
 
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_layout_view, container, false);
         atomView = (ConstraintLayout) view;
@@ -52,10 +51,6 @@ public class AtomFragment extends Fragment {
 
         calc.setAtomBackend(atomBackend);
 
-//        FragmentTransaction ft = fm.beginTransaction();
-//        Fragment ab = (Fragment) atomBackend;
-//        ft.add(atomView.getId(), ab, "atomBackend");
-//        ft.commit();
         return view;
     }
     public void onStart(){
@@ -63,11 +58,10 @@ public class AtomFragment extends Fragment {
         atomTabLayout.addOnTabSelectedListener(atomBackend);
         atomTabLayout.setupWithViewPager(atomViewPager);
 
+        for(int i = 0; i < atomTabLayout.getTabCount(); i++) {
+            atomTabLayout.getTabAt(i).setIcon(ICONS[i]);
+        }
     }
-
-    //public ArrayList<String> generateCloudItems() {
-//        return backend.generateCloudItems();
-//    }
 
     ///////////////////
     // Getters and Setters

@@ -84,6 +84,7 @@ public class ContactContentRetriever {
                                                       String.valueOf(ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY)};
         birthdaysCursor = cr.query(birthdaysUri, BIRTHDAY_PROJECTION, birthdaySelection, birthdaySelectionArgs, BIRTHDAY_SORT_ORDER);
         Map<Long, String> rawToBirthday = new HashMap<>();
+//        System.out.println("rawToBirthday");
         while (birthdaysCursor.moveToNext()) {
             long rawContactID = 0;
             String birthday = null;
@@ -97,10 +98,11 @@ public class ContactContentRetriever {
 
         // Build a map of raw contact IDs to contact IDs
         Map<Long, Long> rawToContact = new HashMap<>();
+//        System.out.println("rawToContact");
         for (Long l : rawToBirthday.keySet()) {
             Cursor contactsCursor = null;
             Uri contactsUri = ContactsContract.RawContacts.CONTENT_URI;
-            String contactSelection = ContactsContract.RawContacts.CONTACT_ID + "=?";
+            String contactSelection = ContactsContract.RawContacts._ID + "=?";
             String[] contactSelectionArgs = new String[]{String.valueOf(l.toString())};
             contactsCursor = cr.query(contactsUri, CONTACT_PROJECTION, contactSelection, contactSelectionArgs, CONTACT_SORT_ORDER);
             while (contactsCursor.moveToNext()) {
@@ -117,8 +119,9 @@ public class ContactContentRetriever {
 
         // Build a map of raw contact IDs to first names
         Map<Long, String> rawToName = new HashMap<>();
+//        System.out.println("rawToName");
         for (long l : rawToBirthday.keySet()) {
-            long contactID = Long.valueOf(rawToContact.get(l));
+            long contactID = Long.valueOf(rawToContact.get(new Long(l)));
             Cursor namesCursor = null;
             Uri namesUri = ContactsContract.Data.CONTENT_URI;
             String nameSelection = ContactsContract.Data.CONTACT_ID + "=?" + " AND " + ContactsContract.Data.MIMETYPE + "=?";

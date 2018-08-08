@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:minWidth="24dp">
 
     <TextView
         android:id="@+id/itemTextView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="30dp"
         android:layout_margin="1dp"
-        android:background="@drawable/basic_unit_item_selector"
+        android:background="@drawable/sub_super_unit_item_selector"
         android:gravity="center_vertical"
         android:minWidth="30dp"
         android:paddingLeft="4dp"

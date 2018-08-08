@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".75" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cloudContainer"
         android:layout_width="0dp"
@@ -48,13 +55,15 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/tapeLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/inputView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -87,84 +96,103 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
-        android:layout_height="215dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:minHeight="210dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".75" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/tabContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:minHeight="400dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/opPad"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
 
         <TableLayout
             android:id="@+id/opPad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintDimensionRatio="1:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <Button
                     android:id="@+id/buttonClear"
-                    android:layout_width="24dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:text="Clear" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <Button
                     android:id="@+id/buttonMultiply"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:text="x" />
 
                 <Button
                     android:id="@+id/buttonDivide"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:text="/" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <Button
                     android:id="@+id/buttonSubtract"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:text="-" />
 
                 <Button
                     android:id="@+id/buttonAdd"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:text="+" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <Button
                     android:id="@+id/buttonEnter"
-                    android:layout_width="24dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:text="Enter" />
             </TableRow>
@@ -185,11 +213,13 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/registerContainer"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:background="@android:drawable/dialog_holo_light_frame"
+        app:layout_constraintBottom_toTopOf="@+id/outputView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

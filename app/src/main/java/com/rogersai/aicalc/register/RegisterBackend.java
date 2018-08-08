@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RegisterBackend extends Fragment {
-    // TODO: Populate registers from database on app start
     private static RegisterBackend instance;
     private FragmentManager fm;
     private RegisterFragment registerFragment;

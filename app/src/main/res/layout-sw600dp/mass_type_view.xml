@@ -2,25 +2,25 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/volumeTypeView"
+    android:id="@+id/massTypeView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.rogersai.aicalc.cloud.CloudView
-        android:id="@+id/volumeSuperUnitView"
+        android:id="@+id/massSuperUnitView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="2.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/volumeBaseUnitView"
+            android:id="@+id/massBaseUnitView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -42,7 +42,7 @@
     </HorizontalScrollView>
 
     <com.rogersai.aicalc.cloud.CloudView
-        android:id="@+id/volumeSubUnitView"
+        android:id="@+id/massSubUnitView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

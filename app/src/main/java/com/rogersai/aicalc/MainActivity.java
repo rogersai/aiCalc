@@ -17,8 +17,6 @@ import com.rogersai.aicalc.register.RegisterFragment;
 
 
 public class MainActivity extends AppCompatActivity {
-    // TODO: Complete cloud item generation
-    // TODO: Add icons
     // TODO: Finalize layouts
 
     /*

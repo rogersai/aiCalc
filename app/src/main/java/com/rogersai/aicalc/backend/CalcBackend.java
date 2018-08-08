@@ -20,8 +20,11 @@ import com.rogersai.aicalc.cloud.CloudBackend;
 import com.rogersai.aicalc.register.RegisterBackend;
 import com.rogersai.aicalc.symbol.Symbol;
 import com.rogersai.aicalc.symbol.atom.Atom;
+import com.rogersai.aicalc.symbol.atom.DateAtom;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -287,6 +290,18 @@ public class CalcBackend extends Fragment{
     //////////////////////
     public ArrayList<Pair<String, String>> getHolidays() {
         return calendarCR.getHolidays();
+    }
+    public ArrayList<Pair<String, String>> getBirthdays() {
+        Map<String, String> birthdays =  contactCR.getBirthdays();
+        ArrayList<Pair<String, String>> birthdayList = new ArrayList<>();
+        for(String name : birthdays.keySet()){
+            String displayText = name.concat("'s Birthday");
+            DateAtom atom = new DateAtom(birthdays.get(name));
+            String formulaText = atom.toString();
+            Pair<String, String> pair = new Pair<>(displayText, formulaText);
+            birthdayList.add(pair);
+        }
+        return birthdayList;
     }
 
     public void removeReg(int id) {

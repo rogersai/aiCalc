@@ -17,9 +17,13 @@ public class DateAtom extends Atom{
     private DateTime date;
 
     public DateAtom(String date) {
-        //TODO: Implement constructor
         super();
         type = "date";
+        String[] parts = date.split("-");
+        int day = Integer.valueOf(parts[2]);
+        int month = Integer.valueOf(parts[1]);
+        int year = Integer.valueOf(parts[0]);
+        this.date = new DateTime(year, month, day, 0, 0, 0).withZone(DateTimeZone.UTC);
     }
 
     public DateAtom(int day, int month, int year) {
@@ -45,7 +49,6 @@ public class DateAtom extends Atom{
 
     @Override
     public boolean equals(Object o) {
-        //TODO: Implement equals
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DateAtom that = (DateAtom) o;
@@ -54,7 +57,6 @@ public class DateAtom extends Atom{
 
     @Override
     public String toString() {
-        //TODO: Implement toString
         return formatter.print(date.withZone(DateTimeZone.getDefault())).toUpperCase();
     }
 
